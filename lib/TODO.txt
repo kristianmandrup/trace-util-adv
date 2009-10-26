@@ -1,0 +1,12 @@
+Test String appender
+- log string to file
+
+
+
+Test library in general
+- functions as expected?
+- easy to use?
+- create RSpec tests?
+
+
+http://www.extjswithrails.com/2008/03/fitting-ext-js-into-rails-architecture.html

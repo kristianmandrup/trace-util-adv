@@ -1,0 +1,73 @@
+body {
+	font-family:Verdana,sans-serif;
+	font-size:11px;
+}
+
+.method {
+	background-color: #c0c0c0;		
+	border: 1px solid;	
+	padding: 8px;
+}
+
+.begin {
+	background-color: #AAFFAA;	
+	padding: 8px;	
+	border: 1px solid;		
+}
+
+.end {
+	background-color: #77FF77;	
+	padding: 8px;	
+	border: 1px solid;
+}
+
+.args {
+	background-color: #ACD6FC;
+	border: 1px solid;	
+	padding: 4px;		
+}
+
+.method-title {
+	background-color: white;
+	font-size:16px;	
+	font-weight: bold;
+	padding: 4px;	
+	border: 2px solid;
+	cursor: pointer;
+}
+
+.method-name {
+	font-size:14px;	
+}
+	
+
+.begin .method-name {
+	background-color: #A0F0A0;	
+	font-weight: bold;
+	padding: 4px;	
+	border: 1px solid;
+}
+
+.end .method-name {
+	background-color: #70F070;	
+	font-weight: bold;
+	padding: 4px;	
+	border: 1px solid;
+}
+
+
+.method-args {
+	background-color: #7CA6CC;
+	padding: 4px;		
+}
+
+.method-block-arg {
+	background-color: #4CA6AC;	
+	padding: 4px;		
+}
+
+.method-result {
+	background-color: #FFFFAA;
+	padding: 4px;	
+	border: 1px solid;			
+}

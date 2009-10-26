@@ -1,0 +1,87 @@
+Advanced TraceUtils
+===================
+last update: 26/10/2009
+By kristian mandrup, kmandrup@gmail.com
+---
+
+This project enables advanced TRACING capabilities on any Ruby application, class or module.
+
+The project was inspired by TraceUtils, a little meta-programming example (~50 lines of code) by Dave Thomas 
+(See Pragmatic Bookstore - http://pragprog.com/)
+
+The original TraceUtils has been completely refactored and expanded to include: 
+- Indentation according to nesting level of methods calls 
+- Define sets of context filters for when to apply tracing on a method, when to apply appenders etc 
+  - module, class, method, instance variable and composite filters
+- Action handlers to handle each trace/log statement
+- Appenders, similar to log4j appenders, to allow channeling of trace messages to multiple trace consumers
+- Action handlers and Appenders can also have context filters registered
+- Custom Filters  
+
+Design
+------
+- Log message
+  each log message consists of the message itself and its current context. The context includes:
+  - Modules/Classes hierarchy of the method where the log statement is called
+  - Method name
+  - Instance variables
+
+TODO:
+  log messages can be inserted in your application code and will be handled by the tracing framework.
+  Currently the framework only supports tracing of method entry and exits.
+
+- Tracing::TraceExt 
+  is configured with a set of action handlers (see below)
+  can be configured with a set of filters    
+
+- Tracing::TraceCalls
+  each Module/Class which should have tracing applied must include the TraceCalls module
+  when TraceCalls is included, the 'included' callback method iterates all instance methods of the module it has been included
+  for each such instance method, it will apply a 'before' and 'after' aspect to the instance method only if all filters registered
+  directly on TraceExt are passed.   
+  
+  When (the application runs and) the instance method is called, each action handler registered with TraceExt is called to handle the "runtime" tracing  
+  
+- Filter
+  decides whether the trace message and current context should "pass through". Multiple filters act as a filter chain, where all filters 
+  in the chain must be passed the filtered item is rejected
+  - ModuleFilter, ClassFilter, MethodFilter, CompositeModuleFilter, CompositeClassFilter, InstanceVarFilter, CompositeInstanceVarFilter
+
+  You can also specify custom filters (see class RangeFilter in filters/message_filters.rb)
+  Filters can also include custom include/exclude filters using Procs or Classes (see test_special_filters.rb)
+
+TODO
+  soon filters will be a lot easier to set up for the simple use cases!
+
+- ActionHandler
+  handles a runtime logging action
+  can be configured with a set of filters and appenders
+  if all filters are passed for the given log message and context, each appender is called in turn with the same message and context
+  The appenders can also be set using registered appenders with symbols. Default symbol mappings are:
+  :logger, :xml, :html, :template
+
+  For more on Appenders, see section below
+  
+  Usage:
+  @ah1 = Tracing::ActionHandler.new(:filters => [Module_filter_A, Method_filter_A], :appenders => [tla1])
+  
+  Alternative appender configuration using symbols:
+  @ah1 = Tracing::ActionHandler.new(:filters => [Module_filter_A, Method_filter_A], :appenders => [:template, :xml])
+  
+
+- Appender 
+  is configured with some appender options specific to the type of Appender 
+  must be configured with a Tracer that renders the output string which the appender the appends to some consumer, such as a stream  
+  - LoggerAppender, HtmlAppender, XmlAppender, FileAppender
+  - TemplatateLogAppender
+  
+  Usage:
+  tla1 = Tracing::TemplateLogAppender.new(:options => {:overwrite => false, :time_limit => 2.minutes}, :tracer => :string)    
+
+  For any Appender, the tracer configuration can be set using a symbol :string, :xml, :html. 
+  Otherwise the default tracer for the given appender is used, fx HtmlTracer for the HtmlAppender.
+
+Examples of use
+--------------
+- test_filters.rb
+- test_special_filters.rb

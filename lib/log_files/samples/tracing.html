@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Tracing :: abc</title>
+	<link rel="stylesheet" href="tracing.css" type="text/css" media="screen" title="tracing" charset="utf-8">
+	<script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="tracing.js"></script>	
+</head>
+<body>
+  <div class="method">
+    <div class="method-title">Math.operation</div>
+    <div class="method-body">
+      <div class="begin">
+        <div class="method-name">Math.operation :: BEGIN</div>
+        <div class="args">
+          <div class="method-args">2, 5</div>
+          <div class="method-block-arg">(and a block)</div>
+        </div>
+      </div>
+
+      <div class="method">
+        <div class="method-title">Math.sub</div>
+        <div class="method-body collapsed">
+          <div class="begin">
+            <div class="method-name">Math.sub :: BEGIN</div>
+            <div class="args">
+              <div class="method-args">5, 3</div>
+              <div class="method-block-arg">(and a block)</div>
+            </div>
+          </div>  
+          <div class="end">
+            <div class="method-name">Math.sub :: END</div>
+            <div class="method-result">2</div>
+          </div>
+        </div>
+      </div>      
+
+      <div class="end">
+        <div class="method-name">Math.operation :: END</div>
+        <div class="method-result">7</div>
+      </div>
+    </div>
+  </method>
+</body>
+</html>

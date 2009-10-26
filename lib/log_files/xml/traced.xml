@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tracing>
+      <method name="Gamma.my_method">
+        <modules></modules>
+        <class>Gamma</class>
+        <args>{:a=>7}</args>
+        
+
+      <method name="Gamma.my_other_method">
+        <modules></modules>
+        <class>Gamma</class>
+        <args>{:a=>7}</args>
+        
+
+        <result>32</result>
+      </method>
+
+        <result>27</result>
+      </method>
+
+</tracing>

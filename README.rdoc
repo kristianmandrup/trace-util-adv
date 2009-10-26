@@ -1,6 +1,14 @@
 = trace-util-adv
 
-Description goes here.
+This gem allows you to easily configure your ruby project for Tracing. 
+This project was originally started in order to better get an understanding of the internal workings of DRYML, a template language of the Rails Hobo project. Soon it became obvious that it could be made into a more generic utility usable in all kinds of Ruby contexts and projects.
+It has been designed to be non-intrusive, meaning that you can configure and apply it completely externally to your "core" application core.
+Fx on a Rails project you could create a configure_tracing.rb file, require this gem and configure the use of tracing on your project from here.
+
+See the README in the lib for more details on the design, usage instructions etc.
+
+Note: Currently this version is still considered alpha, but it should work. 
+Feel free to fork it, fix it, provide feedback and suggestions ;) 
 
 == Note on Patches/Pull Requests
  

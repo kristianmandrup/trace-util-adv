@@ -112,7 +112,7 @@ module Tracing
     end
     
     def allow_name?(name)
-      return rules.rules_allow?(name)
+      res = rules.rules_allow?(name)
     end
   end
 

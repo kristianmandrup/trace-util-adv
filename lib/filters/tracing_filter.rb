@@ -39,7 +39,11 @@ module Tracing
         @filters ||= Tracing::TraceExt.filters
         @filters.each do |_filter|
           # apply filter
-          return false if _filter && !_filter.allow?(msg, context)
+          if _filter 
+            res = _filter.allow?(msg, context)
+            return false if res == :exclude
+            return true if res == :include
+          end
         end
         return true
       end

@@ -25,30 +25,54 @@ class Array
   end
 end
 
+class Symbol
+  def prefix(pre)
+    (pre.to_s + self.to_s).to_sym
+  end
+end
+
 class Hash
   include Tracing::RuleMatch
+
+  def try_create_filter(symbol)
+    if has_i(symbol)         
+      {symbol => {:include => self[symbol] }}
+    elsif has_x(symbol)         
+      {symbol => {:exclude => self[symbol] }}
+    end
+  end
   
   def rules_allow?(name)
-    return false if !rule_allow?(name)
-    true      
+    rule_allow?(name)
   end  
     
+  # return a symbol, either - :include, :exclude or :none (let next filter decide)  
   def rule_allow?(name)
     include_rules = self[:include]
     if include_rules && include_rules.size > 0
       res = include_rules.matches_any?(name)
-      return true if res
+      return :include if res
     end
     if self[:exclude]
-      return false if self[:exclude].matches_any?(name)
+      return :exclude if self[:exclude].matches_any?(name)
     end
     if !self[:default].nil?
       return self[:default]      
     end
-    true
+    :none
   rescue RuleTypeError
-    false    
+    :exclude    
   end  
+  
+protected  
+  def has_i(symbol)
+    self.has_key?(symbol.prefix('i'))
+  end
+
+  def has_x(symbol)
+    self.has_key?(symbol.prefix('i'))
+  end
+  
 end
 
 

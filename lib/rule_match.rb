@@ -25,14 +25,14 @@ module Tracing
       end
     end
   
-    def rules_allow?(name)
+    def rules_allow_action(name)
       self.each do |rule|
-        res = rule.rule_allow?(name)
-        return false if res == :exclude
-        return true if res == :include
+        res = rule.rule_allow_action(name)
+        return :exclude if (res == :exclude)
+        return :include if (res == :include)
       end
       # default allow action
-      return true
+      return :yield
     end
   end
 end

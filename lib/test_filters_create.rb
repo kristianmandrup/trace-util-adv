@@ -1,26 +1,26 @@
 require "core_extensions"
 require "trace_calls"
-require "sample_filters"
+require "output_templates"
 require "rubygems"
 require "duration"
 require "test/unit"
  
 class TestFilter < Test::Unit::TestCase
 
-  def setup
-    @ah1 = Tracing::ActionHandler.new(:filters => [Module_filter_A, Class_filter_A])      
-    @ah1 = Tracing::ActionHandler.new(:filters => Class_filter_A)      
-  end
-
   def teardown
     ## Nothing really
   end
     
-  def test_filter
-    puts @ah1.inspect
+  def test_filter_create
+
+    names = %w{blip blop}
+    puts "create include method filter, names: #{names}" 
+    method_filter_B = Tracing::Filter.create_filter({:imethod_filter =>  names})
     
-    # Tracing::TraceExt.configure(:filters => Class_filter_A)    
-    # Tracing::TraceExt.configure(:filters => [Module_filter_A, Class_filter_A])        
+    f = Tracing::BaseFilter.create_filter(method_filter_B)
+    
+    puts method_filter_B.inspect
+    puts f.inspect
   end
   
   

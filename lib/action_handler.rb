@@ -88,8 +88,10 @@ module Tracing
     # handle tracelogs by applying filters and action handler methods
     def handle(txt, context)
       if filters_allow?(txt, context)
+        # puts "handle_allow: " + context[:method_name]
         handle_allow(txt, context)
       else
+        # puts "handle_not_allow: " + context[:method_name]        
         handle_not_allow(txt, context)
       end
     end

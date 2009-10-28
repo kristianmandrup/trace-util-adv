@@ -51,6 +51,7 @@ module Tracing
           if TraceCalls.ok_to_trace?(name)
             TraceCalls.suppress_tracing do
               if trace_method?(context) 
+                # puts "tracing before:" + context[:method_full_name]
                 handle_before_call(context)
               end
             end
@@ -59,19 +60,20 @@ module Tracing
           if TraceCalls.ok_to_trace?(name)
             TraceCalls.suppress_tracing do          
               if trace_method?(context)  
+                # puts "tracing after:" + context[:method_full_name]                
                 context[:result] = result
                 handle_after_call(context)   
               end
             end
           end
           res = result
-          if TraceCalls.ok_to_trace?(name)
-            TraceCalls.suppress_tracing do          
-              if trace_method?(name)                        
-                # method_stack.pop      
-              end
-            end
-          end 
+          # if TraceCalls.ok_to_trace?(name)
+          #   TraceCalls.suppress_tracing do          
+          #     if trace_method?(name)                        
+          #       # method_stack.pop      
+          #     end
+          #   end
+          # end 
           res         
         end
       end

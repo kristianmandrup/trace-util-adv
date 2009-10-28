@@ -55,23 +55,12 @@ module Tracing
 
       def get_filter(options)
         convenience_map.select do |key, _filter|
-          return _filter if options.has_key? key
+          return _filter if options.has_key?(key) || options.has_key?(_filter)
         end
         filter_rule_mappings.select do |key, _filter|
           return _filter if options.has_key? key
-        end        
-      end
-
-      def convenience_rule_mappings(options)
-        if options[:include]
-          include_rule = options[:include].split(",")
-          options[:include] = include_rule if include_rule
         end
-
-        if options[:exclude]
-          exclude_rule = options[:exclude].split(",")
-          options[:exclude] = exclude_rule if exclude_rule      
-        end
+        return options        
       end
 
       # Example:
@@ -79,13 +68,23 @@ module Tracing
       # {:class, :include => 'A,B', :exclude => 'C'}
       def filter_by_hash(options)
         filters ||= default_filters
+
+        # try by factory
+        new_filter = Tracing::Filter.create_filter(options) 
         
-        type = get_filter(options)
+        # puts "New filter: #{new_filter.inspect}"
+        
+        options = new_filter if new_filter
+        
+        # try by other means
+        type = get_filter(options)      
+
         if type && type.kind_of?(Symbol)
           filter_class = filters[type]
-          # ensure options has rules
-          convenience_rule_mappings(options)
+
+          # puts "filter class: #{filter_class}"
         
+          # ensure options has rules                  
           if filter_class
             filter_class.new(options)
           else
@@ -111,8 +110,8 @@ module Tracing
       @name = options[:name] || "Unknown filter"      
     end
     
-    def allow_name?(name)
-      res = rules.rules_allow?(name)
+    def name_allow_action(name)
+      res = rules.rules_allow_action(name)
     end
   end
 
@@ -123,9 +122,9 @@ module Tracing
       @rules = options[:module_rules] || {}
     end
 
-    def allow?(msg, context)
+    def allow_action(msg, context)
       name = context[:full_module_name]
-      allow = allow_name?(name)
+      allow = name_allow_action(name)
     end
   end
 
@@ -136,35 +135,24 @@ module Tracing
       @rules = options[:class_rules] || {}
     end
 
-    def allow?(msg, context)
+    def allow_action(msg, context)
       name = context[:class_name]
-      allow = allow_name?(name)
+      allow = name_allow_action(name)
     end
   end
+
 
   # filter on method
   class MethodFilter < BaseFilter
     def initialize(options)
       super(options)      
-      @rules = options[:method_rules] || {}
+      @rules = options[:method_rules] || options[:method_filter] || {}
     end
 
-    def allow?(msg, context)
+    def allow_action(msg, context)
       name = context[:method_name]
       @encountered ||= []
-      allow = allow_name?(name)
-      if !@encountered.include? name
-        @encountered << name        
-        puts "MethodFilter: #{name}"
-        rules.each do |rule| 
-          puts "Name: #{rule[:name]}"
-          puts "Include methods:" + rule[:include].inspect    
-          puts "Exclude methods:" + rule[:exclude].inspect    
-          puts "Default: #{rule[:default]}" 
-        end
-        puts "Allow: #{allow}"
-      end
-      allow
+      name_allow_action(name)
     end
   end
   
@@ -178,13 +166,13 @@ module Tracing
       var_name = options[:var_name]
     end
 
-    def allow?(msg, context)
+    def allow_action(msg, context)
       obj = context[:self]
       if var_name.kind_of?(Symbol) || var_name.kind_of?(String)
         value = obj.instance_variable_get(var_name)      
-        return allow_name?(value)
+        return name_allow_action(value)
       end
-      true
+      :yield
     end    
   end  
 end

@@ -1,0 +1,7 @@
+27-10-2009
+==========
+* Created filter_factory.rb
+-  will include convenience methods to create and operate on filters
+- should be used when registering filters in all cases
+
+Framework has become overly complex - simplify, and refactor!

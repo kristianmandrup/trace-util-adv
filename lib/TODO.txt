@@ -1,7 +1,20 @@
+TODO:
+
+Support Intrusive trace statements
+----------------------------------
+- trace messages can be inserted in your application code and should be handled by the tracing framework.
+- Currently the framework only supports tracing of method entry and exits.
+
+Refactor MsgContextRule 
+-----------------------
+- see message_filters.rb
+- BaseFilter should extend this.
+
+Refactor design
+- Modularize even more!
+
 Test String appender
 - log string to file
-
-
 
 Test library in general
 - functions as expected?
@@ -9,4 +22,7 @@ Test library in general
 - create RSpec tests?
 
 
+
+
+ExtJS:
 http://www.extjswithrails.com/2008/03/fitting-ext-js-into-rails-architecture.html

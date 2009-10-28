@@ -13,7 +13,7 @@ begin
     gem.homepage = "http://github.com/kristianmandrup/trace-util-adv"
     gem.authors = ["Kristian Mandrup"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
-    gem.files.exclude 'test_*.rb', 'log_files'    
+    gem.files.exclude 'test', 'log_files'    
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new      

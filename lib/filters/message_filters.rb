@@ -7,17 +7,18 @@ module Tracing
       @options = options
     end
   
-    def allow?(msg, context)
-      true
+    def name_allow_action(msg, context)
+      return :include
     end
   end
 
   # example of specific filter on instance variable
   class RangeFilter < MsgFilter  
-    def allow?(msg, context)
+    def name_allow_action(msg, context)
       obj = context[:self]    
       var = obj.instance_variable_get @options[:var]
-      return @options[:range].include?(var)    
+      return :include if @options[:range].include?(var)    
+      return :yield
     end
   end
 

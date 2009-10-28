@@ -1,66 +1,95 @@
 Advanced TraceUtils
 ===================
-last update: 26/10/2009
+last update: 27/10/2009
 By kristian mandrup, kmandrup@gmail.com
 ---
 
-This project enables advanced TRACING capabilities on any Ruby application, class or module.
+This project enables advanced TRACING capabilities on any Ruby application.
+Tracing can be added to any class or module in a non-obtrusive fashion.
 
 The project was inspired by TraceUtils, a little meta-programming example (~50 lines of code) by Dave Thomas 
 (See Pragmatic Bookstore - http://pragprog.com/)
 
 The original TraceUtils has been completely refactored and expanded to include: 
-- Indentation according to nesting level of methods calls 
-- Define sets of context filters for when to apply tracing on a method, when to apply appenders etc 
+
+- Context filters 
   - module, class, method, instance variable and composite filters
-- Action handlers to handle each trace/log statement
-- Appenders, similar to log4j appenders, to allow channeling of trace messages to multiple trace consumers
-- Action handlers and Appenders can also have context filters registered
+  - define in what context to: 
+    - apply tracing on a method 
+    - let the tracing take effect (maybe only trace this method when certain instance variables are set?)
+    - when to apply which tracing appenders (send trace output to logger under certain conditions)
+       
+- Action handlers 
+  - configure multiple action handlers
+  - each handler can be configured to handle traces in a specific way (with specific filters and appenders)
+
+- Appenders
+  - similar to log4j appenders
+  - allow channeling of trace messages to multiple trace consumers, fx files, streams etc.
+  
 - Custom Filters  
+  - Custom Name filters
+    - basic filters are based on regular expressions or simple string matches
+    - add your own custom name filters (instance of Tracing::NameFilter) - see message_filters.rb
+  - Custom Context filters
+    - basic Context filters extend Tracing::BaseFilter, and are Method, Class, Module, InstanceVar and various Composite filters
+    - add your own Context filters (instance of Tracing::MsgFilter) - see RangeFilter as an example in message_filters.rb
+
+  - NOTE: 
+    Tracing::BaseFilter should also extend Tracing::MsgFilter (renamed to MsgContextFilter ?)
+
 
 Design
 ------
-- Log message
-  each log message consists of the message itself and its current context. The context includes:
-  - Modules/Classes hierarchy of the method where the log statement is called
-  - Method name
-  - Instance variables
+- Trace message
+  - In general each trace message consists of the message itself and its current context. 
+    The context includes:
+    - Modules and Classes hierarchy of the method where the trace is called from
+    - Method name of the trace
+    - Instance variables
 
-TODO:
-  log messages can be inserted in your application code and will be handled by the tracing framework.
-  Currently the framework only supports tracing of method entry and exits.
+  - a trace message is sent as the program calls a method for a class or module being traced
+    this trace has the message 'BEGIN' and the context contains the arguments of the method
+  - another trace message is sent as the program exits the method
+    this trace has the message 'END' and the context contains the result of the method
 
 - Tracing::TraceExt 
-  is configured with a set of action handlers (see below)
-  can be configured with a set of filters    
+  - must be configured with a set of action handlers (see below)
+  - can be configured with a set of filters that indicate in what context to apply tracing    
+  - TraceCalls will use this TraceExt configuration to determine its tracing behavior
 
 - Tracing::TraceCalls
-  each Module/Class which should have tracing applied must include the TraceCalls module
-  when TraceCalls is included, the 'included' callback method iterates all instance methods of the module it has been included
-  for each such instance method, it will apply a 'before' and 'after' aspect to the instance method only if all filters registered
-  directly on TraceExt are passed.   
+  - when TraceCalls is included, the 'included' callback method iterates all instance methods of the module it has been included
+    for each such instance method, it will apply a 'before' and 'after' tracing aspect to the instance method, but only if all filters registered
+    with TraceExt are passed.   
   
-  When (the application runs and) the instance method is called, each action handler registered with TraceExt is called to handle the "runtime" tracing  
+  - When (the application runs and) the instance method is called, each action handler registered with TraceExt is called to handle the "runtime" tracing  
   
-- Filter
-  decides whether the trace message and current context should "pass through". Multiple filters act as a filter chain, where all filters 
-  in the chain must be passed the filtered item is rejected
+  - TraceCalls should be applied unobtrusively like this:
+    
+    Me::My.class_eval { include Tracing::TraceCalls }  
+  
+- MsgContextFilter
+  - can be used to decide whether the trace message and current context should "pass through". 
+  - Multiple filters can be chained. A single filter can result in either :include, :exlude or :yield
+    Chaining filter behavior:
+    if any filter returns :include, the result of all filters will be :include
+    if any filter returns :exclude, the result of all filters will be :exclude
+    if any filter returns :yield, the decision will be yielded to the next filter in the chain 
+    
   - ModuleFilter, ClassFilter, MethodFilter, CompositeModuleFilter, CompositeClassFilter, InstanceVarFilter, CompositeInstanceVarFilter
 
-  You can also specify custom filters (see class RangeFilter in filters/message_filters.rb)
-  Filters can also include custom include/exclude filters using Procs or Classes (see test_special_filters.rb)
-
-TODO
-  soon filters will be a lot easier to set up for the simple use cases!
+  - You can also specify custom MsgContextFilters (see RangeFilter example in message_filters.rb and test_special_filters.rb)
+- NameFilter
+  - a MsgContextFilter contains include and exclude rules which are both lists of NameFilter. 
+  - you can define your own custom NameFilters (see message_filters.rb and test_special_filters.rb)
 
 - ActionHandler
-  handles a runtime logging action
-  can be configured with a set of filters and appenders
-  if all filters are passed for the given log message and context, each appender is called in turn with the same message and context
-  The appenders can also be set using registered appenders with symbols. Default symbol mappings are:
-  :logger, :xml, :html, :template
+  - handles trace from TraceCalls
+  - TraceExt can be configured with multiple ActionHandlers, the trace is sent to each handler in turn
+  - an ActionHandler can be registered with Filters and Appenders
 
-  For more on Appenders, see section below
+  - if all filters of an ActionHandler are passed for the given trace, each Appender registered with the ActionHandler is called in turn with the trace
   
   Usage:
   @ah1 = Tracing::ActionHandler.new(:filters => [Module_filter_A, Method_filter_A], :appenders => [tla1])
@@ -68,19 +97,32 @@ TODO
   Alternative appender configuration using symbols:
   @ah1 = Tracing::ActionHandler.new(:filters => [Module_filter_A, Method_filter_A], :appenders => [:template, :xml])
   
-
 - Appender 
-  is configured with some appender options specific to the type of Appender 
-  must be configured with a Tracer that renders the output string which the appender the appends to some consumer, such as a stream  
-  - LoggerAppender, HtmlAppender, XmlAppender, FileAppender
-  - TemplatateLogAppender
+  - is configured with some appender options specific to the type of Appender 
+  - must be configured with a Tracer that renders the output string which the appender the appends to some consumer, such as a stream  
+  - The following appenders are included by default:
+    - LoggerAppender, HtmlAppender, XmlAppender, FileAppender
+
+    For DRYML tracing, the following has been created so far (more to come)
+    - TemplatateLogAppender
   
   Usage:
   tla1 = Tracing::TemplateLogAppender.new(:options => {:overwrite => false, :time_limit => 2.minutes}, :tracer => :string)    
 
-  For any Appender, the tracer configuration can be set using a symbol :string, :xml, :html. 
-  Otherwise the default tracer for the given appender is used, fx HtmlTracer for the HtmlAppender.
+  For any Appender, the TraceTemplate (tracer) configuration can be set using a symbol :string, :xml, :html. 
+  Otherwise the default TraceTemplate for the given appender is used, fx HtmlTracer for the HtmlAppender.
 
+- TraceTemplate
+  - each Appender must be configured with a single TraceTemplate 
+  - a TraceTemplate defines how to render the text to be written to an appender, fx the text written to a file or a stream
+  - the TraceTemplate should contain placeholders for elements of the tracing context which are to be written out (and thus traced!)
+  - you can define your own TraceTemplate by overwriting Tracing::OutputTemplate::BaseTrace  
+  - The following TraceTemplates are included by default:
+    :string, :xml, :html  
+    
+    NOTE: should also include :json in the near future!
+  
+  
 Examples of use
 --------------
 - test_filters.rb

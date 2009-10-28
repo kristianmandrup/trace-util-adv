@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trace-util-adv}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = %q{2009-10-26}
+  s.date = %q{2009-10-28}
   s.description = %q{
       Configure tracing using context sensitive filters, appenders, output templates in a completely non-intrusive fashion. 
       Tracing can even be applied runtime as a response when certain conditions occur}
@@ -21,14 +21,56 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "CHANGELOG",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "lib/README",
+     "lib/TODO.txt",
+     "lib/action_handler.rb",
+     "lib/appenders/appender.rb",
+     "lib/appenders/appender_registration.rb",
+     "lib/appenders/base_appender.rb",
+     "lib/appenders/file_appender.rb",
+     "lib/appenders/html_appender.rb",
+     "lib/appenders/logger_appender.rb",
+     "lib/appenders/stream_appender.rb",
+     "lib/appenders/template_log_appender.rb",
+     "lib/appenders/xml_appender.rb",
+     "lib/core_extensions.rb",
+     "lib/filters/base_filters.rb",
+     "lib/filters/composite_filters.rb",
+     "lib/filters/filter_factory.rb",
+     "lib/filters/message_filters.rb",
+     "lib/filters/tracing_filter.rb",
+     "lib/output_templates.rb",
+     "lib/rule_match.rb",
+     "lib/sample_filters.rb",
+     "lib/templates/base_template.rb",
+     "lib/templates/html_template.rb",
+     "lib/templates/string_template.rb",
+     "lib/templates/trace_output_handler.rb",
+     "lib/templates/xml_template.rb",
+     "lib/test_action_handler.rb",
+     "lib/test_appender.rb",
+     "lib/test_file_appender.rb",
+     "lib/test_filters.rb",
+     "lib/test_filters_chain.rb",
+     "lib/test_filters_create.rb",
+     "lib/test_html_appender.rb",
+     "lib/test_special_filters.rb",
+     "lib/test_xml_appender.rb",
+     "lib/test_xml_gen.rb",
      "lib/trace-util-adv.rb",
+     "lib/trace_appenders.rb",
+     "lib/trace_calls.rb",
+     "lib/trace_ext.rb",
+     "lib/trace_filters.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "spec/trace-util-adv_spec.rb"
+     "spec/trace-util-adv_spec.rb",
+     "trace-util-adv.gemspec"
   ]
   s.homepage = %q{http://github.com/kristianmandrup/trace-util-adv}
   s.rdoc_options = ["--charset=UTF-8"]

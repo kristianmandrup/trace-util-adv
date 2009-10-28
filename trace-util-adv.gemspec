@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trace-util-adv}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
@@ -45,6 +45,10 @@ Gem::Specification.new do |s|
      "lib/filters/message_filters.rb",
      "lib/filters/tracing_filter.rb",
      "lib/output_templates.rb",
+     "lib/resources/jquery-1.3.2.min.js",
+     "lib/resources/prototype.js",
+     "lib/resources/tracing.css",
+     "lib/resources/tracing.js",
      "lib/rule_match.rb",
      "lib/sample_filters.rb",
      "lib/templates/base_template.rb",
@@ -52,16 +56,6 @@ Gem::Specification.new do |s|
      "lib/templates/string_template.rb",
      "lib/templates/trace_output_handler.rb",
      "lib/templates/xml_template.rb",
-     "lib/test_action_handler.rb",
-     "lib/test_appender.rb",
-     "lib/test_file_appender.rb",
-     "lib/test_filters.rb",
-     "lib/test_filters_chain.rb",
-     "lib/test_filters_create.rb",
-     "lib/test_html_appender.rb",
-     "lib/test_special_filters.rb",
-     "lib/test_xml_appender.rb",
-     "lib/test_xml_gen.rb",
      "lib/trace-util-adv.rb",
      "lib/trace_appenders.rb",
      "lib/trace_calls.rb",
@@ -79,7 +73,17 @@ Gem::Specification.new do |s|
   s.summary = %q{adds advancing tracing capability to your ruby code}
   s.test_files = [
     "spec/spec_helper.rb",
-     "spec/trace-util-adv_spec.rb"
+     "spec/trace-util-adv_spec.rb",
+     "test/test_action_handler.rb",
+     "test/test_appender.rb",
+     "test/test_file_appender.rb",
+     "test/test_filters.rb",
+     "test/test_filters_chain.rb",
+     "test/test_filters_create.rb",
+     "test/test_html_appender.rb",
+     "test/test_special_filters.rb",
+     "test/test_xml_appender.rb",
+     "test/test_xml_gen.rb"
   ]
 
   if s.respond_to? :specification_version then

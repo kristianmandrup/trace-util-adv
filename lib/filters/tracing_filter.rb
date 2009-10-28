@@ -63,6 +63,14 @@ module Tracing
             res = _filter.allow_action(msg, context)
             # puts "res: #{res}"  
 
+            if (res == :include_and_yield)
+              allow = true
+            end
+
+            if (res == :exclude_and_yield)
+              allow = false
+            end
+
             if (res == :include)
               # puts "included - break"
               allow = true

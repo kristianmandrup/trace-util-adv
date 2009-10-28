@@ -71,7 +71,15 @@ Design
   
 - MsgContextFilter
   - can be used to decide whether the trace message and current context should "pass through". 
-  - Multiple filters can be chained. A single filter can result in either :include, :exlude or :yield
+  - Multiple filters can be chained. 
+    A single filter can have any of these results: 
+
+    :include            - include and end filter chain (pass through all filters no matter what the following filters decide)   
+    :exclude            - exclude and end filter chain (filter blocks no matter what the following filters decide)   
+    :yield              - no decision, let following filters decide  
+    :include_and_yield  - include for now, but let following filters overrule this 
+    :exclude_and_yield  - exclude for now, but let following filters overrule this 
+    
     Chaining filter behavior:
     if any filter returns :include, the result of all filters will be :include
     if any filter returns :exclude, the result of all filters will be :exclude

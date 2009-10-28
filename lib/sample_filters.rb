@@ -28,6 +28,7 @@ Class_filter_A = {
     :name => 'my_classes',
     :include => [/MyCl/],
     :exclude => [/NotMy/],
+    :include_and_yield => ['blap'],    
     :default => false
   }]
 }
@@ -39,6 +40,7 @@ Method_filter_A = {
     :name => 'my_methods',
     :include => [/by.*/, 'compile', 'do_it'],
     :exclude => ['my.*'],
+    :exclude_and_yield => ['blip'],
     :default => false
   }]
 }

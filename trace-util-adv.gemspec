@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trace-util-adv}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = %q{2009-10-28}
+  s.date = %q{2009-10-29}
   s.description = %q{
       Configure tracing using context sensitive filters, appenders, output templates in a completely non-intrusive fashion. 
       Tracing can even be applied runtime as a response when certain conditions occur}

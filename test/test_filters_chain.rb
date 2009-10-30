@@ -70,8 +70,9 @@ class TestFilter < Test::Unit::TestCase
     names_A = %w{blip blop}
     names_B = "blip blop"
     names_C = "blip, blop"
-
     bfil = {:xmethod_filter => names_B}
+
+    my_method_filter = {:xmethod_filter => "method_a, method b"}
 
     # method_filter_A = Tracing::Filter.create_filter({:imethod_filter =>  names_A})        
     method_filter_B = Tracing::Filter.create_filter(bfil)        

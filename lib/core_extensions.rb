@@ -39,14 +39,27 @@ end
 class Hash
   include Tracing::RuleMatch
 
+  def self.rule_symbol_mappings
+    {
+      :i => :include,
+      :x => :exclude,
+      :iy => :include_and_yield,
+      :xy => :exclude_and_yield      
+    }
+  end
+
   def try_create_filter(symbol)
-    isymbol = has_i(symbol) || has_x(symbol)
-    # puts "try_create_filter: " + isymbol.inspect 
-    if isymbol   
-      filter_names = self[isymbol]
-      # puts "filter_names:" + filter_names.inspect
-      {symbol => {:include => filter_names}}
-    end
+    _symbol = has_any_prefix(symbol)
+    puts _symbol.inspect
+    return if !_symbol
+    
+    prefix = _symbol[:prefix]
+    filter_sym = _symbol[:filter_symbol]
+    # 
+    filter_names = self[filter_sym]
+    # 
+    rule_symbol = Hash.rule_symbol_mappings[prefix.to_sym]
+    {symbol => {rule_symbol => filter_names}}    
   end
   
   def rules_allow_action(name)
@@ -87,14 +100,19 @@ class Hash
   end  
   
 protected  
-  def has_i(symbol)
-    isym = symbol.prefix('i')
-    self.has_key?(isym) ? isym : false
+  def has_prefix(symbol, prefix)
+    sym = symbol.prefix(prefix)
+    self.has_key?(sym) ? {:filter_symbol => sym, :prefix => prefix} : false
   end
 
-  def has_x(symbol)
-    self.has_key?(symbol.prefix('i'))
+  def has_any_prefix(symbol)
+    ['iy', 'xy', 'i', 'x'].each do |prefix|
+      hash_result = has_prefix(symbol, prefix)
+      return hash_result if hash_result         
+    end  
+    false
   end
+
   
 end
 

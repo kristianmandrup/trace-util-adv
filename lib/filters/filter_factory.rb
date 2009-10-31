@@ -4,7 +4,7 @@ module Tracing::Filter
   
   def self.create_filter(name_hash)
     # puts "TRY create_filter: " + name_hash.inspect
-      [:module_filter, :class_filter, :method_filter].each do |symbol|
+      [:module_filter, :class_filter, :method_filter, :vars_filter].each do |symbol|
         # puts "symbol:" + symbol.to_s
         res = name_hash.try_create_filter(symbol) 
         # puts "Filter created:" + res.inspect     

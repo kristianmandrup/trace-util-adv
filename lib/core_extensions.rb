@@ -32,7 +32,7 @@ end
 
 class Symbol
   def prefix(pre)
-    (pre.to_s + self.to_s).to_sym
+    (pre.to_s + '_' + self.to_s).to_sym
   end
 end
 

@@ -1,9 +1,10 @@
+11-11-2009
+==========
+* Test cases for basic and composite filters all pass
+
 8-11-2009
 =========
 * Composite Class filters works
-* TODO: 
-- Composite Module
-- Composite Var
 
 31-10-2009
 ==========

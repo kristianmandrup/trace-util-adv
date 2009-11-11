@@ -1,9 +1,6 @@
 TODO:
 ----
-FIX TODO:
-- create filters from hash doesn't work :(
-- test_filter_exec (see current_test)
-
+- Unit tests for appenders. action_handler
 
 ---
 Add time to context for before- and after handle calls. Enable tracing time output 

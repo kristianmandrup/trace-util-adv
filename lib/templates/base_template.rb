@@ -1,3 +1,5 @@
+require 'templates/trace_output_handler'
+
 module Tracing 
   module OutputTemplate
     class BaseTrace

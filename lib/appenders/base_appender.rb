@@ -1,8 +1,9 @@
+require 'filters/tracing_filter'
+
 module Tracing
   # base appender (abstract)
   class BaseAppender
-    include Tracing::Filter::Registration  
-    include Tracing::Filter::Exec    
+    include Tracing::FilterUse
 
     attr_accessor :options
     attr_reader :tracer
@@ -10,17 +11,9 @@ module Tracing
     class << self
       attr_accessor :tracers
 
-      def default_tracers
-        {
-          :string => Tracing::OutputTemplate::StringTrace, 
-          :xml => Tracing::OutputTemplate::XmlTrace,
-          :html => Tracing::OutputTemplate::HtmlTrace,          
-          :default => Tracing::OutputTemplate::StringTrace
-        }
-      end
 
       def register_tracers(tracers = nil)
-        @tracers ||= default_tracers
+        @tracers ||= {} # default_tracers
         @tracers = @tracers.merge!(tracers || {})
       end
       

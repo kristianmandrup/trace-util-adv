@@ -30,7 +30,7 @@ class TestFilter < Test::Unit::TestCase
     name = "my_method"
     my_instance_variables = {:template_path => 'taglibs/rapid_core.dryml'}
     args = {:a => 7}
-    @context = {
+    @context = { 
       :modules => cls_name.modules,
       :class_name => cls_name.class_name,
       :full_class_name => cls_name,

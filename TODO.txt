@@ -1,5 +1,11 @@
 TODO:
+----
+FIX TODO:
+- create filters from hash doesn't work :(
+- test_filter_exec (see current_test)
 
+
+---
 Add time to context for before- and after handle calls. Enable tracing time output 
 Allow for comparing time it takes to complete method and act upon it!
 Store method with come context on stack, to allow look up to compare with previous calls. Perhaps find average time it took to call this method etc.

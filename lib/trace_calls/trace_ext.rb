@@ -2,13 +2,16 @@ require 'templates/trace_output_handler'
 require 'trace_filters'
 require 'action_handler'
 require 'trace_appenders'
+# require 'singleton'
 
 module Tracing
   module TraceExt
-    # include Tracing::Filter::Registration
     include Tracing::Filter::Exec
 
     class << self
+      # supports 
+      # - Filter registration    
+      # - ActionHandler registration
       include Tracing::Filter::Registration
       include Tracing::ActionHandler::Registration
 
@@ -25,10 +28,6 @@ module Tracing
         @final_yield_action = options[:final_yield] || :include
       end
 
-    end
-
-    def method_full_name(context)
-      "#{context[:class_name]}.#{context[:method_name]}"
     end
 
     def trace_method?(context)

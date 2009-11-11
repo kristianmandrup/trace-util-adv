@@ -3,13 +3,15 @@ module Tracing
     class RuleTypeError < RuntimeError; end  
   
     def matches_any?(name) 
-      # puts "matches any: #{name}"
+      puts "matches any: #{name.inspect}"
       self.any? do |rule| 
+        puts "rule:" + rule.inspect
+        puts "against:" + name.inspect
         if rule.kind_of? Regexp
           # match return position of match, or nil if no match
           # here converted into boolean result
-          match = (name =~ rule) 
-          # puts "matches regexp #{rule}: #{match}"
+          match = !(name =~ rule).nil? 
+          puts "match: #{match}"
           match
         elsif rule.kind_of? String
           match = (name == rule)

@@ -1,3 +1,5 @@
+require 'trace_calls/mappings'
+
 module Tracing
   module Appender
     
@@ -6,21 +8,9 @@ module Tracing
       # array of Appender instances
       attr_accessor :appender_mappings
 
-      # used to help construct/register Appender instances using convenience symbols
-      def default_appender_mappings
-        {
-          :logger => Tracing::LoggerAppender,
-          :stream => Tracing::StreamAppender,           
-          :xml => Tracing::XmlAppender,
-          :html => Tracing::HtmlAppender,          
-          :template => Tracing::TemplateLogAppender,          
-          :default => Tracing::StreamAppender
-        }
-      end
-
       def register_default_mappings
         @appender_mappings ||= {}
-        @appender_mappings.merge!(default_appender_mappings)
+        @appender_mappings.merge!(Mappings.default_appender_mappings)
       end
 
       def register_appender_mappings(_appender_mappings)

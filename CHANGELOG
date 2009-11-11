@@ -1,3 +1,24 @@
+8-11-2009
+=========
+* Composite Class filters works
+* TODO: 
+- Composite Module
+- Composite Var
+
+31-10-2009
+==========
+
+* Changed convenience filter creation methods to use :i_, :x_, :iy_ and :xy_, fx :xy_method_filter (note the underscore!)
+* Added first unit test to ensure this works as expected. More unit tests to come to cover the framework as it stabilizes... 
+
+* Planning to possible use Singleton pattern 
+ 
+* Use duck typing, extend Hash, Array and Symbol  
+
+* TODO
+  rule_allow_action(name) NEEDS MAJOR CLEANUP AND REFACTOR!!!
+
+
 27-10-2009
 ==========
 * Created filter_factory.rb
@@ -6,4 +27,5 @@
 
 * improved README documentation
 
-NOTE: Framework has perhaps become overly complex - simplify, and refactor next week! 
+NOTE: 
+Framework has perhaps become overly complex - simplify, and refactor next week! 

@@ -1,5 +1,3 @@
-require 'rules/rule_match'
-
 class Array
   include Tracing::RuleMatch
     

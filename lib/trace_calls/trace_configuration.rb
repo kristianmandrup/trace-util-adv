@@ -1,5 +1,15 @@
 module Tracing
   class Configuration
+    class << self 
+      def apply(options)
+        in_module = options[:module]
+        classes_to_trace = options[:classes]
+        classes_to_trace.each do |cls|
+          eval "#{in_module}::#{cls}.class_eval { include Tracing::TraceCalls }"
+        end            
+      end
+    end
+    
     include Tracing::Filter::Registration
     include Tracing::ActionHandler::Registration
 
@@ -12,5 +22,8 @@ module Tracing
     end
     
   end
-end     
+end  
+
+
+   
 

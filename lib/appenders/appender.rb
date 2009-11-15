@@ -1,5 +1,3 @@
-require 'trace_calls/mappings'
-
 module Tracing
   module Appender
     

@@ -1,6 +1,23 @@
-require 'action_handler/action_handler'
-
 class Hash
+  
+  def context
+    modules = self[:modules]
+    cls_name = self[:class_name]
+    method_name = self[:method_name]
+    self[:modules] = cls_name.modules if cls_name && !modules
+    self[:class_name] = cls_name.class_name if cls_name
+    calculate_full_names
+  end
+  
+  def method_name=(name)
+    self[:method_name] = name
+    calculate_full_method_name
+  end
+
+  def result=(res)
+    self[:result] = res
+  end
+
   
   def set_context(hash)
     modules = hash[:modules]
@@ -16,10 +33,7 @@ class Hash
     self[:args] = args if args
     self[:vars] = vars if vars
 
-
-    self[:full_modules_name] = full_modules_name
-    self[:full_class_name] = full_class_name
-    self[:full_method_name] = full_method_name    
+    calculate_full_names  
   end
 
   def full_modules_name
@@ -138,6 +152,16 @@ class Hash
   end
   
 protected  
+
+  def calculate_full_names
+    self[:full_modules_name] = full_modules_name
+    self[:full_class_name] = full_class_name
+    calculate_full_method_name    
+  end
+    
+  def calculate_full_method_name
+    self[:full_method_name] = full_method_name
+  end
 
   def has_prefix(symbol, prefix)
     sym = symbol.prefix(prefix)

@@ -1,0 +1,1 @@
+Not sure how useful specific list filters (limited to a single kind of filter) are, since you can always just create a list of various kinds of filters.

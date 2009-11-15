@@ -1,6 +1,5 @@
 module Tracing 
-  module OutputTemplate
-    class HtmlTrace < BaseTrace
+  class HtmlTemplate < BaseTemplate
       
       def before_template(context)
         # method_name = context[:method_full_name]

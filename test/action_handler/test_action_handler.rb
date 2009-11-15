@@ -1,8 +1,4 @@
-require "core_extensions"
-require "trace_calls"
-require "sample_filters"
-require "rubygems"
-require "duration"
+require "trace-util-adv"
 require "test/unit"
  
 class TestFilter < Test::Unit::TestCase

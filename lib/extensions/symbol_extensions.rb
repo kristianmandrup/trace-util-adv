@@ -1,5 +1,3 @@
-require 'trace_calls/mappings'
-
 class Symbol
   def prefix(pre)
     (pre.to_s + '_' + self.to_s).to_sym

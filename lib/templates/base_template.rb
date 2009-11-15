@@ -1,8 +1,7 @@
 require 'templates/trace_output_handler'
 
 module Tracing 
-  module OutputTemplate
-    class BaseTrace
+  class BaseTemplate
       include Tracing::OutputHandler
       
       def handle_after_call(context)

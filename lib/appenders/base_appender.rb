@@ -1,5 +1,3 @@
-require 'filters/tracing_filter'
-
 module Tracing
   # base appender (abstract)
   class BaseAppender

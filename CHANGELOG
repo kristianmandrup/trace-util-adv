@@ -1,32 +1,5 @@
-11-11-2009
+13-Nov-2009
 ==========
 * Test cases for basic and composite filters all pass
-
-8-11-2009
-=========
-* Composite Class filters works
-
-31-10-2009
-==========
-
-* Changed convenience filter creation methods to use :i_, :x_, :iy_ and :xy_, fx :xy_method_filter (note the underscore!)
-* Added first unit test to ensure this works as expected. More unit tests to come to cover the framework as it stabilizes... 
-
-* Planning to possible use Singleton pattern 
- 
-* Use duck typing, extend Hash, Array and Symbol  
-
-* TODO
-  rule_allow_action(name) NEEDS MAJOR CLEANUP AND REFACTOR!!!
-
-
-27-10-2009
-==========
-* Created filter_factory.rb
-- will include convenience methods to create and operate on filters
-- should be used when registering filters in all cases
-
-* improved README documentation
-
-NOTE: 
-Framework has perhaps become overly complex - simplify, and refactor next week! 
+* Created new filter: ArgumentsFilter
+* Major refactoring! 

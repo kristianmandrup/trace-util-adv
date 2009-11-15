@@ -10,6 +10,17 @@
 #   :vars => my_instance_variables # to carry @template_path etc.
 # } 
 
+Method_filter_hello = {
+  :name => 'my methods',  
+  :method_rules => [{
+    # id of method rule set
+    :name => 'my_methods',
+    :include => [/hi.*/, 'blip', 'blap'],
+    :exclude => ['hello'],
+    :default => false
+  }]
+}
+
 Module_filter_A = {
   :name => 'my modules',
   :module_rules => [{

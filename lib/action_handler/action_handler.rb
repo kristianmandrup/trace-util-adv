@@ -1,5 +1,4 @@
-require 'filters/tracing_filter'
-require 'appenders/trace_appenders'
+Dir.glob(File.join(File.dirname(__FILE__), '**/*.rb')).each {|f| require f }
 
 module Tracing
   class ActionHandler

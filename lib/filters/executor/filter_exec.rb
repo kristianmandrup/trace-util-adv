@@ -22,16 +22,18 @@ module Tracing
         # default allow return value
         allow = (final_yield_action == :exclude ? false : true)               
         
-        # puts "default allow: #{allow}"
+        puts "default allow: #{allow}"
         # puts "filters: #{@filters}"  
         
         return allow if @filters.blank?        
         
+        puts "iterate filters"
         @filters.each do |_filter|
+          puts "filter:" + _filter.inspect
           # apply filter
           if _filter 
             res = _filter.allow_action(msg, context)
-            # puts "res: #{res}"  
+            puts "res: #{res}"  
 
             if (res == :include_and_yield)
               allow = true
@@ -53,6 +55,8 @@ module Tracing
               break
             end
             # puts "yielding..."
+          else
+            puts "filter is null"
           end
         end
         # puts "filters_allow?: #{allow}"

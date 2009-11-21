@@ -3,7 +3,7 @@ module Tracing
     attr_accessor :to_file, :html_output
 
     def initialize(init_options = nil)
-      @tracer = Tracing::OutputTemplate::HtmlTrace.new      
+      @tracer = Tracing::HtmlTemplate.new      
       super(init_options)  
       @html_output = html_begin 
 

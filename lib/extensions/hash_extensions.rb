@@ -7,6 +7,7 @@ class Hash
     self[:modules] = cls_name.modules if cls_name && !modules
     self[:class_name] = cls_name.class_name if cls_name
     calculate_full_names
+    self
   end
   
   def method_name=(name)
@@ -85,17 +86,31 @@ class Hash
     end
   end
 
-  # return action_handler
   def appenders        
     appender_list = self[:appenders]
-    appender_list.appenders
+    return appender_list.appenders if appender_list
+    template = self.template
+    if template
+      puts template.inspect
+    else
+      puts "no template"
+    end
   end
 
-  # return tracer
-  def tracer     
-    tracer_key = self[:tracer]
-    tracer_class = Mappings.default_tracer_mappings[tracer_key]   
-    tracer_class.new
+  # Rework?
+  def appender        
+    puts self[:template].inspect
+    # appenders
+  end
+
+
+  # return template
+  def template     
+    puts "Template from : #{self.inspect}"
+    template_key = self[:template] || self[:type]
+    template_class = TemplateMappings.defaults[template_key]
+    puts template_class.inspect
+    template_class.new self if template_class
   end
     
   def create_filter
@@ -103,15 +118,19 @@ class Hash
     hash = self.create_filter_hash || self    
     if hash    
       filter_class = hash.filter_class
-      # puts "hash: #{hash.inspect} -> class: #{filter_class}"
-      return filter_class.new(hash) if filter_class
+      if filter_class
+        filter_class.new(hash) 
+      else
+        nil
+      end
+    else
+      nil
     end
-    nil    
   end  
 
   def create_filter_hash
   # puts "TRY create_filter: " + name_hash.inspect
-    [:module_filter, :class_filter, :method_filter, :vars_filter].each do |symbol|
+    [:module_filter, :class_filter, :method_filter, :vars_filter, :args_filter].each do |symbol|
       # puts "symbol:" + symbol.to_s
       res = self.try_create_filter_hash(symbol) 
       # puts "Filter created:" + res.inspect     
@@ -123,14 +142,14 @@ class Hash
 
   def try_create_filter_hash(symbol)
     _symbol = has_any_prefix(symbol)
-    puts _symbol.inspect
+    # puts _symbol.inspect
     return if !_symbol
     
     prefix = _symbol[:prefix]
     filter_sym = _symbol[:filter_symbol]
-    # 
+
     filter_names = self[filter_sym]
-    # 
+
     rule_symbol = prefix.to_sym.rule
     {symbol => {rule_symbol => filter_names}}    
   end
@@ -142,10 +161,10 @@ class Hash
   end
 
   def filter_class
-    Mappings.convenience_map.select do |key, _filter|
+    FilterMappings.convenience_map.select do |key, _filter|
       return _filter.filter_class if self.has_key?(key) || self.has_key?(_filter)
     end
-    Mappings.filter_rule_mappings.select do |key, _filter|
+    FilterMappings.rules_map.select do |key, _filter|
       return _filter.filter_class if self.has_key? key
     end
     nil
@@ -154,13 +173,16 @@ class Hash
 protected  
 
   def calculate_full_names
-    self[:full_modules_name] = full_modules_name
-    self[:full_class_name] = full_class_name
+    fmm = full_modules_name
+    fcm = full_class_name
+    self[:full_modules_name] = fmm if fmm
+    self[:full_class_name] = fcm if fcm
     calculate_full_method_name    
   end
     
   def calculate_full_method_name
-    self[:full_method_name] = full_method_name
+    fmn = full_method_name
+    self[:full_method_name] = fmn if fmn
   end
 
   def has_prefix(symbol, prefix)

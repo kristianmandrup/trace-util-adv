@@ -1,5 +1,4 @@
-require 'filters/base_filters'
-require "test/unit"
+require "../include"
 
 
 class TestBaseFilter < Test::Unit::TestCase
@@ -12,7 +11,7 @@ class TestBaseFilter < Test::Unit::TestCase
   end
             
   def test_default_name
-    bf = Tracing::BaseFilter.new
+    bf = Tracing::BaseFilter.new({})
     assert_equal "Unknown filter", bf.name, "Should result name:'Unknown filter'"
   end
   
@@ -26,12 +25,15 @@ class TestBaseFilter < Test::Unit::TestCase
     assert_equal "base", bf.name, "Should result in name:'base'"
   end
     
-  def test_register_filters    
-    bf = Tracing::BaseFilter.new({:name => 'base'})
+  def test_register_filters          
+    Tracing::BaseFilter.new({:name => 'base'})
     bF = Tracing::BaseFilter
+    
     f1 = {:x => :y}
     bF.register_filters(f1)
-    assert_equal f1, bF.filters, "Should result in x=>y filter"
+    expect = {:x => :y}    
+    assert_equal expect, bF.filters, "Should result in x=>y filter"
+
     f2 = {:z => :a}
     bF.register_filters(f2)
     expect = {:z=>:a, :x=>:y}

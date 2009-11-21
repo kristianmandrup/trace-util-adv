@@ -1,6 +1,4 @@
-require 'filters/filter_exec'
-require 'extensions/core_extensions'
-require "test/unit"
+require "../include"
 
 Class_filter = {
   :name => 'my classes',  

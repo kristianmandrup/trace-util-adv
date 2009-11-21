@@ -1,6 +1,4 @@
-require 'extensions/core_extensions'
-require "test/unit"
-
+require 'include'
 
 class TestSymbolExtensions < Test::Unit::TestCase
 
@@ -18,7 +16,7 @@ class TestSymbolExtensions < Test::Unit::TestCase
   
   def test_trace_class
     result = :xml.trace_class
-    assert_equal result, Tracing::OutputTemplate::XmlTrace, ":xml Should result in XmlTrace"            
+    assert_equal result, Tracing::XmlTemplate, ":xml Should result in XmlTrace"            
   end
   
   def appender_class

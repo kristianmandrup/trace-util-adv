@@ -8,7 +8,7 @@ module Tracing
 
       def register_default_mappings
         @appender_mappings ||= {}
-        @appender_mappings.merge!(Mappings.default_appender_mappings)
+        @appender_mappings.merge!(AppenderMappings.defaults)
       end
 
       def register_appender_mappings(_appender_mappings)

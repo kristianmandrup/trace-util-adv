@@ -1,6 +1,4 @@
-require 'filters/filter_exec'
-require 'extensions/core_extensions'
-require "test/unit"
+require "../include"
 
 InstanceVar_filter = {
   :name => 'check template path',
@@ -45,18 +43,19 @@ class TestInstanceVarFilter < Test::Unit::TestCase
   # see allow_action in InstanceVarFilter, refactor :yield, :include .. as return values!?
   def test_varfilter__class_and_varmatch
     var_filter = InstanceVar_filter
-    context = {:class_name => "Hobo::Dryml", :vars => {"template_path" => "a/taglib/x"} }.context
+    context = {:class_name => "Hobo::Dryml", :vars => {"template_path" => "a/taglib/x"}, :self => Obj.new("a/taglib/x") }.context
   
     options = {:filters => var_filter}    
     exec = Tracing::Filter::Executor.new(options)       
     result = exec.filters_allow?('msg', context)
+
     assert_equal true, result, "Filter should allow passage"    
   end
 
   def test_varfilter__varnot_match
     var_filter = InstanceVar_filter
   
-    context = {:class_name => 'Blip::Blap', :vars => {"template_path" => "a/taglib/x"}, :self => Obj.new("blop") }.context    
+    context = {:class_name => 'Blip::Blap', :vars => {"template_path" => "a/taglib/x"}, :self => Obj.new("taglib/x") }.context    
     
     puts "Context:" + context.inspect
     
@@ -68,10 +67,7 @@ class TestInstanceVarFilter < Test::Unit::TestCase
   
   def test_varfilter__varexcluded
     var_filter = InstanceVar_filter
-    context = {:class_name => 'Blip::Blap', :vars => {"template_path" => "a/taglib/x"} }.context
-    
-    context[:self] = Obj.new "a/rapid_x"
-
+    context = {:class_name => 'Blip::Blap', :vars => {"template_path" => "a/taglib/x"}, :self => Obj.new("a/rapid_x") }.context  
     
     options = {:filters => var_filter}    
     exec = Tracing::Filter::Executor.new(options)       

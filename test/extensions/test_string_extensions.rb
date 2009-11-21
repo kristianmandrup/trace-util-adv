@@ -1,6 +1,4 @@
-require 'extensions/core_extensions'
-require "test/unit"
-
+require "include"
 
 class TestFilter < Test::Unit::TestCase
             

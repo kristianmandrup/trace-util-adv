@@ -1,7 +1,23 @@
 TODO:
 ----
-- Unit tests for appenders. action_handler
-- require txt_file_mutator
+- Clean up Appenders, Templates and Targets
+- Convenience Appenders
+  - LogFile
+  - HtmlFile
+  - XmlFile
+  - HtmlString
+  - XmlString
+  - Logger
+  
+  - Targets
+    - File
+    - String
+    - Stream (STDOUT, STDERR)    
+    - Stack
+    
+  - Add listener to Target?
+  
+  - Simplify with Listener model?
 
 ---
 Add time to context for before- and after handle calls. Enable tracing time output 

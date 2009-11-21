@@ -2,6 +2,7 @@ class Hash
   include Tracing::RuleMatch
   
   def rules_allow_action(name)
+    puts "Hash: rules_allow_action"
     rule_allow_action(name)
   end  
     
@@ -12,6 +13,9 @@ class Hash
   # return a symbol, either - :include, :exclude or :exclude_and_yield, :include_and_yield or :yield (let next filter decide)  
   def rule_allow_action(name)
     include_rules = self[:include].rule_list
+    
+    puts "include_rules: #{include_rules.inspect}, name: #{name}"
+    
     if !include_rules.blank?
       # puts "Rule include"            
       res = include_rules.matches_any?(name)

@@ -7,6 +7,7 @@ module Tracing
 
     # filter on module names and then on class names and methods within those modules
     def allow_action(msg, context)
+      puts "CM"
       modules_name = context[:full_modules_name]
       action = rules[:default] || :yield 
       # puts "modules_name: #{modules_name}"     

@@ -6,6 +6,7 @@ module Tracing
     end
 
     def allow_action(msg, context)
+      puts "LIF"
       action = rules[:default] || :yield      
       var_rules = rules[:vars]
       # puts "var rules: #{var_rules.inspect}"

@@ -1,9 +1,20 @@
 module Tracing
   class FileTarget
     include Tracing::DefaultPath
+
+    attr_accessor :to_file    
+    
     class << self
       include Tracing::DefaultPath
     end    
+
+    def initialize(options)
+      def_path = options[:default_path]
+      _to_file = options[:to_file]
+
+      @default_path = def_path if def_path
+      @to_file = _to_file if _to_file
+    end
 
     def append(txt, context)
       file = get_file(context)

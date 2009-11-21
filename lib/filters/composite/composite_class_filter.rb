@@ -7,6 +7,7 @@ module Tracing
 
     # filter on class names and then methods within those classes
     def allow_action(msg, context)
+      puts "CC"
       # class name of context
       class_name = context[:class_name]
       action = rules[:default] || :yield

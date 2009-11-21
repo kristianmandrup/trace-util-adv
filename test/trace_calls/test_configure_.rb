@@ -1,8 +1,4 @@
-require 'extensions/core_extensions'
-require 'filters/base_filters'
-require 'rules/hash_rule_extensions'
-require "test/unit"
-
+require "include"
 
 class TestTraceCallsConfigure < Test::Unit::TestCase
   
@@ -14,28 +10,35 @@ class TestTraceCallsConfigure < Test::Unit::TestCase
     
     @ah1_filter_1 = {:x_class_filter => "Dryml"}
     @ah1_filter_1 = {:i_class_filter => "Template"}
+    
+    @ah_filters = [@ah1_filter_1, @ah1_filter_2]
+    
+    @ah1_app_1 = :xml
+    @ah1_app2 = :html
+    
+    @appenders = [@ah1_app_1, @ah1_app2]
   end
 
 
   def test_register_action_handler_from_hash
     # Action handler
-    ah1 = {:filters => [@ah1_filter_1, @ah1_filter_2], :appenders => [ah1_app_1, ah1_app2]}     
+    ah1 = {:filters => @ah_filters, :appenders => @appenders}.action_handlers
     action_handlers = ah1
     # Trace configuration
-    configuration = Tracing::Configuration.new {:action_handlers => action_handlers, :filters => @filters, :final_yield_action => :exclude}
+    configuration = Tracing::Configuration.new :action_handlers => action_handlers, :filters => @filters, :final_yield_action => :exclude
     # configure
     TraceCalls.configure(configuration)
   end
 
   def test_register_action_handler_from_hash
     # Action handlers
-    ah1 = {:filters => [ah1_filter_1, ah1_filter_2], }     
+    ah1 = {:filters => @filters}.action_handlers     
     app_1 = :xml
     # Trace configuration
-    configuration = Tracing::Configuration.new {:appenders => app_1, :filters => filters, :final_yield_action => :exclude}
+    configuration = Tracing::Configuration.new :appenders => app_1, :filters => @ah_filters, :final_yield_action => :exclude
 
     # configure
-    TraceCalls.configure(configuration)
+    Tracing::TraceExt.configure(configuration)
 
   end
 
@@ -49,8 +52,8 @@ class TestTraceCallsConfigure < Test::Unit::TestCase
 
   def test_register_multiple_action_handler_from_hash
     # Action handlers
-    ah1 = {:filters => [ah1_filter_1, ah1_filter_2], :appenders => [ah1_app_1, ah1_app2]}
-    ah2 = {:filters => [ah2_filter_1, ah2_filter_2], :appenders => [ah2_app_1, ah2_app2]}
+    ah1 = {:filters => @ah_filters, :appenders => @appenders}
+    ah2 = {:filters => @ah_filters, :appenders => @appenders}
 
     action_handlers = [ah1, ah2]
 
@@ -60,10 +63,10 @@ class TestTraceCallsConfigure < Test::Unit::TestCase
     filters = [im_filter_1, xym_class_1]
 
     # Trace configuration
-    configuration = Tracing::Configuration.new {:action_handlers => action_handlers, :filters => filters, :final_yield_action => :exclude}
+    configuration = Tracing::Configuration.new :action_handlers => action_handlers, :filters => @ah_filters, :final_yield_action => :exclude
 
     # configure
-    TraceCalls.configure(configuration)
+    Tracing::TraceExt.configure(configuration)
   end
 
 end

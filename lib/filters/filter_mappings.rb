@@ -6,9 +6,10 @@ module FilterMappings
       :class_rules => :class_filter,
       :method_rules => :method_filter,        
       :var_rules => :vars_filter,        
+      :arg_rules => :args_filter,        
       :modules => :composite_module_filter,
       :classes => :composite_class_filter,
-      :vars => :composite_vars_filter
+      :vars => :list_vars_filter
     }
   end
 
@@ -28,9 +29,10 @@ module FilterMappings
      :class_filter  => Tracing::ClassFilter,
      :method_filter => Tracing::MethodFilter,
      :vars_filter => Tracing::InstanceVarFilter,
+     :args_filter => Tracing::ArgumentFilter,
      :composite_module_filter => Tracing::CompositeModuleFilter,
      :composite_class_filter => Tracing::CompositeClassFilter,
-     :composite_vars_filter => Tracing::CompositeInstanceVarFilter
+     :list_vars_filter => Tracing::ListInstanceVarFilter
     }
   end  
 end

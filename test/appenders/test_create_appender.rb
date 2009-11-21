@@ -1,33 +1,32 @@
-require 'extensions/core_extensions'
-require "test/unit"
+require "include"
 
 
 class TestAppenderTracers < Test::Unit::TestCase
 
   def test_exec_xml_tracer
-    xml_tracer = {:type => :xml, :to_file => 'log_files/xml/traced.xml'}.tracer
-    assert_equal Tracing::XmlAppender, xml_tracer.class, "Should create instance of XmlTracer"
+    xml_tracer = {:type => :xml, :to_file => 'log_files/xml/traced.xml'}.appender
+    assert_equal Tracing::XmlAppender, xml_tracer.class, "Should create instance of XmlAppender"
     
     xml_tracer.trace('hello world')    
   end
 
   def test_exec_html_tracer
-    html_tracer = {:type => :html, :default_path => 'log_files/html'}.tracer
-    assert_equal Tracing::HtmlAppender, html_tracer.class, "Should create instance of HtmlTracer"
+    html_tracer = {:type => :html, :default_path => 'log_files/html'}.appender
+    assert_equal Tracing::HtmlAppender, html_tracer.class, "Should create instance of HtmlAppender"
      
     html_tracer.trace('hello world')
   end
 
   def test_exec_log_tracer
-    log_tracer = {:type => :log, :default_path => 'log_files'}.tracer
-    assert_equal Tracing::LoggerAppender, log_tracer.class, "Should create instance of LogTracer"
+    log_tracer = {:type => :log, :default_path => 'log_files'}.appender
+    assert_equal Tracing::LoggerAppender, log_tracer.class, "Should create instance of LogAppender"
     
     log_tracer.trace('hello world')
   end
 
   def test_exec_log_tracer
-    appender = {:type => :stream, :stream => :STDOUT}.tracer
-    assert_equal Tracing::StreamAppender, log_tracer.class, "Should create instance of StreamTracer"
+    appender = {:type => :stream, :stream => :STDOUT}.appender
+    assert_equal Tracing::StreamAppender, log_tracer.class, "Should create instance of StreamAppender"
     
     stream_tracer.trace('hello world')
   end

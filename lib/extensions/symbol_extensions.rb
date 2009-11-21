@@ -4,27 +4,29 @@ class Symbol
   end
 
   def filter_class
-    mapper = Mappings.default_filters
+    mapper = FilterMappings.defaults
     mapper.map(self)
   end
   
   def trace_class
-    mapper = Mappings::default_tracer_mappings
+    mapper = TemplateMappings.defaults
     mapper.map(self)
   end
   
   def appender_class
-    mapper = Mappings::default_appender_mappings
+    mapper = AppenderMappings.defaults
     mapper.map(self)  
   end
   
   def rule
-    mapper = Mappings::rule_symbol_mappings
+    mapper = RuleMappings.prefix_map
     mapper.map(self)  
   end
   
   def appenders
-    self.appender_class.new
+    puts "Appenders from: #{self.inspect}"
+    puts "appender_class: #{self.appender_class.inspect}"
+    self.appender_class.new nil
   end
   
 end

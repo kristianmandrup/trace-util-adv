@@ -9,6 +9,7 @@ module Tracing
     end
 
     def allow_action(msg, context)
+      puts "MethF"
       name = context[:method_name]
       # puts "allow name?: #{name}"
       allow = name_allow_action(name)

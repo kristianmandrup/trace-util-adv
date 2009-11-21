@@ -11,23 +11,10 @@ module Tracing
     include Tracing::Filter::Exec
 
     class << self
-      # supports 
-      # - Filter registration    
-      # - ActionHandler registration
-      include Tracing::Filter::Registration
-      include Tracing::ActionHandler::Registration
+      attr_accessor :configuration
 
-      attr_accessor :final_yield_action
-
-      def configure(options)
-        # puts "Filters before config: " + Tracing::TraceExt.filters.inspect        
-        
-        register_filters(options[:filters])
-        
-        # puts "Filters after config: " + Tracing::TraceExt.filters.inspect        
-        
-        register_action_handlers(options[:action_handlers] || options)
-        @final_yield_action = options[:final_yield] || :include
+      def configure(configuration)
+        @configuration ||= configuration if configuration.kind_of? Tracing::Configuration
       end
 
     end

@@ -18,7 +18,7 @@ module Tracing
     end    
 
     def initialize(init_options = nil)
-      @tracer = Tracing::OutputTemplate::XmlTrace.new      
+      @tracer = Tracing::XmlTemplate.new      
       super(init_options)  
       @xml_output = xml_begin    
       

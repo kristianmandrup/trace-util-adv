@@ -1,5 +1,4 @@
-require "trace-util-adv"
-require "test/unit"
+require 'include'
  
 class TestFilter < Test::Unit::TestCase
 

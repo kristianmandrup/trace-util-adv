@@ -36,7 +36,7 @@ module Tracing
     end    
 
     def initialize(init_options)
-      @tracer = Tracing::OutputTemplate::StringTrace.new      
+      @tracer = Tracing::StringTemplate.new      
       super(init_options)
                   
       if init_options.kind_of? Hash            

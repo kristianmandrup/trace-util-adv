@@ -1,6 +1,4 @@
-require 'filters/filter_exec'
-require 'extensions/core_extensions'
-require "test/unit"
+require "../include"
 
 class TestFilterExec < Test::Unit::TestCase
 

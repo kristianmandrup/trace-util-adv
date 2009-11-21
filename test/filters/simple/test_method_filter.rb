@@ -1,6 +1,4 @@
-require 'filters/filter_exec'
-require 'extensions/core_extensions'
-require "test/unit"
+require "../include"
 
 Method_filter = {
   :name => 'my methods',  
@@ -41,8 +39,7 @@ class TestMethodFilter < Test::Unit::TestCase
   def test_method_filter__class_and_method_match
     composite_filter = Method_filter
   
-    context = {}
-    context.set_context :class_name => "Hobo::Dryml", :method_name => "build_a"
+    context = { :class_name => "Hobo::Dryml", :method_name => "build_a"}.context
   
     options = {:filters => composite_filter}    
     exec = Tracing::Filter::Executor.new(options)       
@@ -53,8 +50,7 @@ class TestMethodFilter < Test::Unit::TestCase
   def test_method_filter__method_not_match
     composite_filter = Method_filter
   
-    context = {}    
-    context.set_context :class_name => 'Blip::Blap', :method_name => "blop"
+    context = { :class_name => 'Blip::Blap', :method_name => "blop"}.context
     
     options = {:filters => composite_filter}    
     exec = Tracing::Filter::Executor.new(options)       
@@ -65,8 +61,7 @@ class TestMethodFilter < Test::Unit::TestCase
   def test_method_filter__method_excluded
     composite_filter = Method_filter
   
-    context = {}    
-    context.set_context :class_name => "Hobo::Dryml", :method_name => "add_it"
+    context = { :class_name => "Hobo::Dryml", :method_name => "add_it"}.context
     
     options = {:filters => composite_filter}    
     exec = Tracing::Filter::Executor.new(options)       

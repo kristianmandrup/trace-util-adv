@@ -1,55 +1,5 @@
-require "core_extensions"
-require "trace_calls"
-require "output_templates"
-require "rubygems"
-require "duration"
-require "test/unit"
+require "../include"
 
-# configure use of TraceExt
-module Me
-  class My     
-
-    def hello
-      puts "Hello World!"
-    end   
-
-    def hi_there
-      puts "Hi there!"
-    end   
-
-    def blip
-      puts "Blip!"
-    end   
-
-    def blap
-      puts "Blap!"
-    end   
-
-  end    
-end
-
-Method_filter_A = {
-  :name => 'my methods',  
-  :method_rules => [{
-    # id of method rule set
-    :name => 'my_methods',
-    :include => [/hi.*/],
-    :exclude => ['hello'],
-    :default => :yield
-  }]
-}    
- 
-# Method_filter_B = {
-#   :name => 'my methods',  
-#   :method_rules => [{
-#     # id of method rule set
-#     :name => 'my_methods',
-#     :include => ['blip', 'blop'],
-#     :default => :yield
-#   }]
-# }
-
-  
 class TestFilter < Test::Unit::TestCase
 
   attr_reader :ah1, :filters

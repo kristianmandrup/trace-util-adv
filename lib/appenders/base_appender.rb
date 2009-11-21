@@ -4,24 +4,24 @@ module Tracing
     include Tracing::FilterUse
 
     attr_accessor :options
-    attr_reader :tracer
+    attr_reader :templates
     
     class << self
-      attr_accessor :tracers
+      attr_accessor :templates
 
 
-      def register_tracers(tracers = nil)
-        @tracers ||= {} # default_tracers
-        @tracers = @tracers.merge!(tracers || {})
+      def register_templates(templates = nil)
+        @templates ||= {} # default_templates
+        @templates = @templates.merge!(templates || {})
       end
       
-      def create_tracer(tracer)
-        tracers ||= register_tracers
-        if tracer.kind_of?(Symbol) || tracer.kind_of?(String)
-          tracer_class = tracers[tracer.to_sym] || tracers[:default]
-          tracer_class.new
-        elsif tracer.kind_of? Tracing::OutputTemplate::Trace
-          tracer
+      def create_template(template)
+        templates ||= register_templates
+        if template.kind_of?(Symbol) || template.kind_of?(String)
+          template_class = templates[template.to_sym] || templates[:default]
+          template_class.new
+        elsif template.kind_of? Tracing::BaseTemplate
+          template
         else
           nil
         end
@@ -33,18 +33,16 @@ module Tracing
       if init_options.kind_of? Hash
         @options = init_options[:options] || init_options
         register_filters(init_options[:filters])
-        tracer = @options[:tracer] if @options
-        return if !tracer
+        template = @options[:template] if @options
+        return if !template
 
-        tracer = self.class.create_tracer(tracer)      
-        @tracer = tracer         
+        @template = self.class.create_template(template)      
       elsif init_options.kind_of? Symbol
-        self.class.register_tracers
-        tracer = self.class.tracers[init_options]
+        self.class.register_templates
+        tracer = self.class.templates[init_options]
         return if !tracer
 
-        tracer = self.class.create_tracer(tracer)      
-        @tracer = tracer                 
+        @template = self.class.create_template(template)
       else
         raise Exception, "Appender must be initialized with Hash"
       end

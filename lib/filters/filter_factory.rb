@@ -6,7 +6,7 @@ module Tracing::Filter
     # puts "TRY create_filter: " + name_hash.inspect
       [:module_filter, :class_filter, :method_filter, :vars_filter].each do |symbol|
         # puts "symbol:" + symbol.to_s
-        res = name_hash.try_create_filter(symbol) 
+        res = name_hash.try_create_filter_hash symbol
         # puts "Filter created:" + res.inspect     
         return res if res
       end

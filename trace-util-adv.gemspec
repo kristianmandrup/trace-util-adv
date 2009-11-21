@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trace-util-adv}
-  s.version = "0.2.4"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = %q{2009-11-15}
+  s.date = %q{2009-11-21}
   s.description = %q{
       Configure tracing using context sensitive filters, appenders, output templates in a completely non-intrusive fashion. 
       Tracing can even be applied runtime as a response when certain conditions occur}
@@ -63,6 +63,7 @@ Gem::Specification.new do |s|
      "lib/filters/list/README-NOTE.txt",
      "lib/filters/list/list_instance_var_filter.rb",
      "lib/filters/msg_context/message_context_filters.rb",
+     "lib/filters/name_filter.rb",
      "lib/filters/simple/argument_filter.rb",
      "lib/filters/simple/class_filter.rb",
      "lib/filters/simple/instance_var_filter.rb",
@@ -102,15 +103,18 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/spec_helper.rb",
      "spec/trace-util-adv_spec.rb",
+     "test/action_handler/include.rb",
      "test/action_handler/test_action_handler.rb",
      "test/action_handler/test_create_action_handler.rb",
+     "test/appenders/include.rb",
      "test/appenders/test_appender_filters.rb",
-     "test/appenders/test_appender_tracers.rb",
+     "test/appenders/test_appender_templates.rb",
      "test/appenders/test_create_appender.rb",
      "test/appenders/test_html_appender.rb",
      "test/appenders/test_stream_appender.rb",
      "test/appenders/test_template_log_appender.rb",
      "test/appenders/test_xml_appender.rb",
+     "test/extensions/include.rb",
      "test/extensions/test_filters_creation.rb",
      "test/extensions/test_hash_extensions.rb",
      "test/extensions/test_hash_filter_extensions.rb",
@@ -122,6 +126,7 @@ Gem::Specification.new do |s|
      "test/filters/composite/test_composite_module_filter.rb",
      "test/filters/composite/test_composite_var_filter.rb",
      "test/filters/executor/test_filter_exec.rb",
+     "test/filters/include.rb",
      "test/filters/msg_context/test_custom_filters.rb",
      "test/filters/simple/test_base_filter.rb",
      "test/filters/simple/test_class_filter.rb",
@@ -135,14 +140,17 @@ Gem::Specification.new do |s|
      "test/sandbox/matcher.rb",
      "test/sandbox/sandbox.rb",
      "test/sandbox/test_xml_gen.rb",
+     "test/targets/test_create_targets.rb",
+     "test/templates/include.rb",
+     "test/templates/test_create_templates.rb",
+     "test/templates/test_exec_templates.rb",
+     "test/trace_calls/include.rb",
      "test/trace_calls/test_configure_.rb",
      "test/trace_calls/tracing/test_html_tracing.rb",
      "test/trace_calls/tracing/test_logger_tracing.rb",
      "test/trace_calls/tracing/test_stream_tracing.rb",
      "test/trace_calls/tracing/test_teamplate_log_tracing.rb",
-     "test/trace_calls/tracing/test_xml_tracing.rb",
-     "test/tracers/test_create_tracers.rb",
-     "test/tracers/test_exec_tracers.rb"
+     "test/trace_calls/tracing/test_xml_tracing.rb"
   ]
 
   if s.respond_to? :specification_version then

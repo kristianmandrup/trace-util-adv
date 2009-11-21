@@ -1,7 +1,11 @@
 TODO:
 ----
+
+=====
+0.4.0
+=====
 - Clean up Appenders, Templates and Targets
-- Convenience Appenders
+- Convenience Appenders?
   - LogFile
   - HtmlFile
   - XmlFile
@@ -13,11 +17,12 @@ TODO:
     - File
     - String
     - Stream (STDOUT, STDERR)    
-    - Stack
-    
-  - Add listener to Target?
+    - Stack (of Strings and/or Events?)
+
+  - Simplify with Listener model?    
+  - Add listeners to Target and/or Appender?
   
-  - Simplify with Listener model?
+
 
 ---
 Add time to context for before- and after handle calls. Enable tracing time output 

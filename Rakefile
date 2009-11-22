@@ -14,6 +14,8 @@ begin
     gem.authors = ["Kristian Mandrup"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.files.exclude 'test', 'log_files'    
+    gem.add_dependency 'require-magic'
+    
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new      

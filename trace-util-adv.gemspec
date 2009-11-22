@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{trace-util-adv}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = %q{2009-11-21}
+  s.date = %q{2009-11-22}
   s.description = %q{
       Configure tracing using context sensitive filters, appenders, output templates in a completely non-intrusive fashion. 
       Tracing can even be applied runtime as a response when certain conditions occur}
@@ -133,6 +133,7 @@ Gem::Specification.new do |s|
      "test/filters/simple/test_instancevar_filter.rb",
      "test/filters/simple/test_method_filter.rb",
      "test/filters/simple/test_module_filter.rb",
+     "test/listeners/test_listeners.rb",
      "test/samples/include.rb",
      "test/samples/sample_classes.rb",
      "test/samples/sample_composite_filters.rb",
@@ -159,11 +160,14 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_runtime_dependency(%q<require-magic>, [">= 0"])
     else
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_dependency(%q<require-magic>, [">= 0"])
     end
   else
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
+    s.add_dependency(%q<require-magic>, [">= 0"])
   end
 end
 

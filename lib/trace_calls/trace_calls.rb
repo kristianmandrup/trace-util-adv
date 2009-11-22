@@ -1,5 +1,3 @@
-require 'trace_ext'
-
 module Tracing
   module TraceCalls
     

@@ -1,14 +1,6 @@
-require 'extensions/include'
-require 'appenders/include'
-require "templates/include"
-require 'output_handler/output_handler'
-require 'action_handler/action_handler'
-require 'filters/filter_use'
-require "duration"
-
 module Tracing
   module TraceExt
-    include Tracing::Filter::Exec
+    Tracing::Filter::Executor
 
     class << self
       attr_accessor :configuration

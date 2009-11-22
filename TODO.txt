@@ -22,8 +22,6 @@ TODO:
   - Simplify with Listener model?    
   - Add listeners to Target and/or Appender?
   
-
-
 ---
 Add time to context for before- and after handle calls. Enable tracing time output 
 Allow for comparing time it takes to complete method and act upon it!
@@ -39,24 +37,7 @@ Introduce new rule outcomes
  :include_yield - set temp outcome to include and then yield, allowing other rule to exclude
  :exclude_yield - set temp outcome to exclude and then yield, allowing other rule to include
 
-Refactor MsgContextRule 
------------------------
-- see message_filters.rb
-- BaseFilter should extend this.
-
-Refactor design
-- Modularize even more!
-
-Test String appender
-- log string to file
-
-Test library in general
-- functions as expected?
-- easy to use?
 - create RSpec tests?
-
-
-
 
 ExtJS:
 http://www.extjswithrails.com/2008/03/fitting-ext-js-into-rails-architecture.html

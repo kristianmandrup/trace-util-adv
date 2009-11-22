@@ -1,5 +1,3 @@
-require 'templates/trace_output_handler'
-
 module Tracing 
   class BaseTemplate
     include Tracing::OutputHandler

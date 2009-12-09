@@ -35,16 +35,10 @@ module Tracing
         define_method(name) do |*args, &block|        
           cls_name = self.class.to_s
           context = {                  
-                     :modules => cls_name.modules,
-                     :full_module_name => cls_name.modules.join("::"),
-                     :class_name => cls_name.class_name,
-                     :full_class_name => cls_name, 
                      :method_name => name, 
                      :args => args, 
                      :block => block_given?,
-                     :self => self,
-                     :vars => self.instance_variables} # to carry @template_path etc.
-          context[:method_full_name] = method_full_name(context)
+                     :self => self}.context
 
           if TraceCalls.ok_to_trace?(name)
             TraceCalls.suppress_tracing do

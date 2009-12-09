@@ -35,7 +35,7 @@ class TestFilter < Test::Unit::TestCase
         
     Tracing::TraceExt.configure(:appenders => {:type => :html, :to_file => 'traced4.html'}, :filters => [meth_filter_A], :final_yield => :exclude)        
     
-    puts "Handlers configured:" + Tracing::TraceExt.action_handlers.inspect    
+    # puts "Handlers configured:" + Tracing::TraceExt.action_handlers.inspect    
             
     # 
     my = Me::My.new

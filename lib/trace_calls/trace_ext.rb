@@ -1,6 +1,6 @@
 module Tracing
   module TraceExt
-    Tracing::Filter::Executor
+    include Tracing::FilterUse
 
     class << self
       attr_accessor :configuration
@@ -12,7 +12,8 @@ module Tracing
     end
 
     def trace_method?(context)
-      filters_allow?('', context)
+      # p filter_executor
+      filter_executor.filters_allow?('', context) if filter_executor
     end
 
     def handle_before_call(context)

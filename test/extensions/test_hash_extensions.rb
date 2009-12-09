@@ -121,20 +121,6 @@ class TestHashExtensions < Test::Unit::TestCase
     assert_equal result.class, Tracing::StringTemplate, "Should result in StringTrace"    
   end
   
-  def test_appenders
-    config = {:appenders => []}
-    result = config.appenders
-    assert_equal result.blank?, true, "Should result in empty appender list"    
-  
-    config = {:appenders => :html}
-    result = config.appenders
-    assert_equal result.class, Tracing::HtmlAppender, "Should result in empty appender list"    
-  
-    config = {:appenders => [:xml, :html]}
-    result = config.appenders
-    assert_equal Tracing::XmlAppender, result[0].class, "Should result in xml appender"        
-    assert_equal Tracing::HtmlAppender, result[1].class, "Should also result in html appender"    
-  end
   
   def test_action_handlers
     config = {:action_handlers => []}

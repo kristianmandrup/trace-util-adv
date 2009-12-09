@@ -4,12 +4,12 @@ module Tracing
     class Executor
       attr_accessor :filters, :final_yield_action
             
-      def initialize(options)
+      def initialize(options = {})
         @final_yield_action = options[:final_yield_action] || :exclude
         @filters ||= []
         _filters = options.filters
         # puts "filters exec: #{_filters.inspect}"
-        @filters.add(_filters)
+        @filters.add(_filters) if filters
       end      
       
       # determine if message and context should pass through filter chain
@@ -72,6 +72,11 @@ module Tracing
     module ExecUse
       # set to instance of Tracing::Filter:Exec
       attr_accessor :filter_executor
+      
+      def self.included(klass)
+        @filter_executor ||= Tracing::Filter::Executor.new
+      end
+        
     end
   end
 end

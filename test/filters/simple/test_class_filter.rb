@@ -18,7 +18,7 @@ class TestFilter < Test::Unit::TestCase
     result = class_filter.filter_class
     assert_equal Tracing::ClassFilter, result, "Should result in  class filter"    
   end
-
+  
   def test_class_filter_hash_to_class
     class_filter = Class_filter
     result = class_filter.create_filter
@@ -37,8 +37,7 @@ class TestFilter < Test::Unit::TestCase
   def test_class_filter__class_and_method_match
     class_filter = Class_filter
   
-    context = {}
-    context.set_context :class_name => "Dryml", :method_name => "build_a"
+    context = {:class_name => "Dryml", :method_name => "build_a"}.context
   
     options = {:filters => class_filter}    
     exec = Tracing::Filter::Executor.new(options)       
@@ -49,20 +48,18 @@ class TestFilter < Test::Unit::TestCase
   def test_class_filter__class_not_match
     class_filter = Class_filter
   
-    context = {}    
-    context.set_context :class_name => 'Blip::Blap'
+    context = {:class_name => 'Blip::Blap'}.context    
     
     options = {:filters => class_filter}    
     exec = Tracing::Filter::Executor.new(options)       
     result = exec.filters_allow?('msg', context)
     assert_equal false, result, "Filter should NOT allow passage"    
   end
-
+  
   def test_class_filter__method_excluded
     class_filter = Class_filter
   
-    context = {}    
-    context.set_context :class_name => "Hobo::Blip"
+    context = {:class_name => "Hobo::Blip"}.context
     
     options = {:filters => class_filter}    
     exec = Tracing::Filter::Executor.new(options)       

@@ -37,7 +37,7 @@ module Tracing
       end
 
       def appender_options_type(options)
-        options[:type]
+        options[:type] || options[:appender]
       end
 
       def appender_type(options)

@@ -12,6 +12,7 @@ module Tracing
     
     include Tracing::Filter::Registration
     include Tracing::ActionHandler::Registration
+require 'filters/executor/filter_exec'
 
     attr_accessor :final_yield_action
 

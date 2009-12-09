@@ -10,7 +10,7 @@ module Tracing
       puts "ModuleF"
       name = context[:full_modules_name]
       puts "name: #{name}"
-      # allow = name_allow_action(name)
+      name_allow_action(name)
     end
   end
 end  

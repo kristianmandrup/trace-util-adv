@@ -18,21 +18,22 @@ class Hash
   def result=(res)
     self[:result] = res
   end
-
   
   def set_context(hash)
+    obj = self[:self]
     modules = hash[:modules]
-    cls_name = hash[:class_name]
+    obj_class = obj.class.to_s.class_name if obj
+    cls_name = hash[:class_name] || obj_class    
+    
     method_name = hash[:method_name]
     args = hash[:args]
     vars = hash[:vars]
     self[:modules] = cls_name.modules if cls_name
+
     self[:modules] = modules if modules
 
     self[:class_name] = cls_name.class_name if cls_name
     self[:method_name] = method_name if method_name
-    self[:args] = args if args
-    self[:vars] = vars if vars
 
     calculate_full_names  
   end
@@ -99,10 +100,9 @@ class Hash
 
   # Rework?
   def appender        
-    puts self[:template].inspect
-    # appenders
+    return appenders if self[:appenders]
+    Tracing::Appender.create_appender(self)
   end
-
 
   # return template
   def template     
@@ -110,7 +110,7 @@ class Hash
     template_key = self[:template] || self[:type]
     template_class = TemplateMappings.defaults[template_key]
     puts template_class.inspect
-    template_class.new self if template_class
+    template_class.new if template_class
   end
     
   def create_filter

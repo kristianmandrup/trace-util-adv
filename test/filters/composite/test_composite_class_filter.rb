@@ -40,8 +40,7 @@ class TestCompositeFilter < Test::Unit::TestCase
   def test_composite_class_filter__class_and_method_match
     composite_filter = Class_composite_filter_A
   
-    context = {}
-    context.set_context :class_name => "Hobo::Dryml", :method_name => "build_a"
+    context = {:class_name => "Hobo::Dryml", :method_name => "build_a"}.context
   
     options = {:filters => composite_filter}    
     exec = Tracing::Filter::Executor.new(options)       

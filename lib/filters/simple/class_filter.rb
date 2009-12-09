@@ -8,7 +8,7 @@ module Tracing
 
     def allow_action(msg, context)
       name = context[:class_name]
-      # puts "class_name: #{name}"
+      puts "class_name: #{name}, name_allow_action(#{name})"
       allow = name_allow_action(name)
     end
   end

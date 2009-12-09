@@ -1,6 +1,19 @@
 TODO:
 ----
+Working tests:
+  - extensions
+  - filters
+  - action_handler
 
+TODO tests:
+- targets
+  - create
+  - exec
+
+BROKEN:
+- appenders
+
+    
 =====
 0.4.0
 =====

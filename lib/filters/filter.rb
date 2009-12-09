@@ -29,7 +29,7 @@ module Tracing
     
     def name_allow_action(name)
       puts "name_allow_action: #{name}"
-      # res = rules.rules_allow_action(name)
+      rules.rules_allow_action(name)
     end
   end  
 end

@@ -73,31 +73,31 @@ class TestInstanceVarFilter < Test::Unit::TestCase
     options = {:filters => var_filter}    
     exec = Tracing::Filter::Executor.new(options)       
     result = exec.filters_allow?('msg', context)
-
+  
     assert_equal true, result, "Filter should allow passage"    
   end
 
-  # def test_varfilter__varnot_match
-  #   var_filter = InstanceVar_filter
-  # 
-  #   context = {:class_name => 'Blip::Blap', :vars => ["template_path" => "a/taglib/x"], :self => Obj.new("taglib/x") }.context    
-  #   
-  #   puts "Context:" + context.inspect
-  #   
-  #   options = {:filters => var_filter}    
-  #   exec = Tracing::Filter::Executor.new(options)       
-  #   result = exec.filters_allow?('msg', context)
-  #   assert_equal false, result, "Filter should NOT allow passage"    
-  # end
-  # 
-  # def test_varfilter__varexcluded
-  #   var_filter = InstanceVar_filter
-  #   context = {:class_name => 'Blip::Blap', :vars => ["template_path" => "a/taglib/x"], :self => Obj.new("a/rapid_x") }.context  
-  #   
-  #   options = {:filters => var_filter}    
-  #   exec = Tracing::Filter::Executor.new(options)       
-  #   result = exec.filters_allow?('msg', context)
-  #   assert_equal false, result, "Filter should NOT allow passage"    
-  # end
+  def test_varfilter__varnot_match
+    var_filter = InstanceVar_filter
+  
+    context = {:class_name => 'Blip::Blap', :vars => ["template_path" => "a/taglib/x"], :self => Obj.new("taglib/x") }.context    
+    
+    puts "Context:" + context.inspect
+    
+    options = {:filters => var_filter}    
+    exec = Tracing::Filter::Executor.new(options)       
+    result = exec.filters_allow?('msg', context)
+    assert_equal false, result, "Filter should NOT allow passage"    
+  end
+  
+  def test_varfilter__varexcluded
+    var_filter = InstanceVar_filter
+    context = {:class_name => 'Blip::Blap', :vars => ["template_path" => "a/taglib/x"], :self => Obj.new("a/rapid_x") }.context  
+    
+    options = {:filters => var_filter}    
+    exec = Tracing::Filter::Executor.new(options)       
+    result = exec.filters_allow?('msg', context)
+    assert_equal false, result, "Filter should NOT allow passage"    
+  end
               
 end

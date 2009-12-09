@@ -4,7 +4,7 @@ module Tracing
       template = <<-EOF
     <<= <%= context[:method_full_name] %> : BEGIN
     -----------------------------------------------
-    <%= context[:args].inspect %>
+    <%= context[:args].inspect if context[:args] %>
     ===============================================
     EOF
     end

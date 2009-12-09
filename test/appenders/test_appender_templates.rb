@@ -14,7 +14,7 @@ class TestAppenderTemplates < Test::Unit::TestCase
 
     @xml_tracer = {:type => :xml, :to_file => 'log_files/xml/traced.xml'}.template
     
-    puts "xmltracer: #{@xml_tracer.inspect}"
+    # puts "xmltracer: #{@xml_tracer.inspect}"
     
     # @html_tracer = {:type => :html, :default_path => 'log_files/html/'}.template
     # @log_tracer = {:type => :log}.template
@@ -26,6 +26,7 @@ class TestAppenderTemplates < Test::Unit::TestCase
     # Trace configuration    
     
     appender_1 = {:template => @xml_tracer}.appender
+    puts "Appender 1: #{appender_1}"
     assert_equal Tracing::XmlAppender, appender_1.class, "Should create instance of XmlAppender"
 
     # appender_2 = {:template => @html_tracer}.appender

@@ -4,8 +4,8 @@ module Tracing
       template = <<-EOF
     <method name="<%= context[:method_full_name] %>">
       <modules><%= context[:full_module_name] %></modules>
-      <class><%= context[:class_name].join(',') %></class>
-      <args><%= context[:args].inspect %></args>
+      <class><%= context[:class_name] %></class>
+      <args><%= context[:args].inspect if context[:args]%></args>
       #block#
     EOF
     end

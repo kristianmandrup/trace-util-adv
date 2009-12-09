@@ -23,6 +23,10 @@ module Tracing
 
     def write_wrap_file(file)
       file = file_path(file)
+      
+      dir = File.dirname(file)      
+      FileUtils.mkdir_p dir if !File.directory? dir      
+      
       File.open(file, "w") do |file|
         file.puts html_begin
         file.puts html_end

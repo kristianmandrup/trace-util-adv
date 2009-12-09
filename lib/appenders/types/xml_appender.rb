@@ -36,7 +36,12 @@ module Tracing
       write_wrap_file(file)      
     end
 
-    def write_wrap_file(file)
+    def write_wrap_file(file) 
+      file = file_path(file)      
+
+      dir = File.dirname(file)      
+      FileUtils.mkdir_p dir if !File.directory? dir
+      
       File.open(file, "w") do |file|
         file.puts xml_begin
         file.puts xml_end

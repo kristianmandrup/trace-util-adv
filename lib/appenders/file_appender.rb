@@ -56,8 +56,8 @@ module Tracing
     end
 
     def file_path(file)
-      def_path = default_path || self.class.default_path
-      file = File.join(def_path, file) if self.class.default_path      
+      def_path = default_path || self.class.default_path || 'logs/tracing'
+      file = File.join(def_path, file) 
     end
 
 protected

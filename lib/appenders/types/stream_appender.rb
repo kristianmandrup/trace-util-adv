@@ -13,7 +13,7 @@ module Tracing
     end
 
     def initialize(init_options)
-      @tracer = Tracing::OutputTemplate::StringTrace.new      
+      @tracer = Tracing::StringTemplate.new      
       super(init_options)
       configure_stream(init_options)                        
     end

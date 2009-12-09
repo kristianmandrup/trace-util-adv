@@ -2,7 +2,7 @@ module Tracing
   class TemplateLogAppender < FileAppender  
 
     def initialize(init_options)
-      @tracer = Tracing::OutputTemplate::StringTrace.new
+      @tracer = Tracing::StringTemplate.new
       super(init_options)
     end
 

@@ -96,23 +96,28 @@ class Hash
 
   # return action_handler
   def action_handlers
-    action_handler_list = self[:action_handlers]
-    if action_handler_list
-      action_handler_list.action_handlers        
+    list = self[:action_handlers]
+    if list
+      list.action_handlers        
     else
-      Tracing::ActionHandler.new(self)
+      self.action_handler
     end
   end
 
+  def action_handler
+    return action_handler if self[:action_handlers]    
+    Tracing::ActionHandler.new(self)
+  end
+
   def appenders        
-    appender_list = self[:appenders]
-    appender_list.appenders if appender_list
-    # template = self.template
-    # if template
-    #   puts template.inspect
-    # else
-    #   puts "no template"
-    # end
+    list = self[:appenders]
+    list.appenders if list
+    if list
+      list.appenders        
+    else
+      self.appender
+    end
+    
   end
 
   # Rework?

@@ -28,7 +28,7 @@ module Tracing
     end
     
     def name_allow_action(name)
-      puts "name_allow_action: #{name}"
+      # puts "name_allow_action: #{name}"
       rules.rules_allow_action(name)
     end
   end  

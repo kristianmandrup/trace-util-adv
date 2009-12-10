@@ -1,10 +1,10 @@
 module Tracing 
   class StringTemplate < BaseTemplate
-    def before_template(context)
+    def before_template(context)                  
       template = <<-EOF
-    <<= <%= context[:method_full_name] %> : BEGIN
+    <<= <%= context.full_name %> : BEGIN
     -----------------------------------------------
-    <%= context[:args].inspect if context[:args] %>
+    <%= context.args %>
     ===============================================
     EOF
     end
@@ -18,9 +18,9 @@ module Tracing
 
     def end_template(context) 
       template = <<-EOF
-    <<= <%= context[:method_full_name] %> : END
+    <<= <%= context.full_name %> : END
     -----------------------------------------------
-    <%= context[:result] %>
+    <%= context.result %>
     ===============================================
     EOF
     end  

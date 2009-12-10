@@ -2,15 +2,13 @@ module Tracing
   class HtmlTemplate < BaseTemplate
       
     def before_template(context)
-      # method_name = context[:method_full_name]
-      # args = context[:args].inspect
       template = <<-EOF
-      <div class="method-title"><%= context[:method_full_name] %></div>
+      <div class="method-title"><%= context.full_name %></div>
       <div class="method-body">
         <div class="begin">
-          <div class="method-name"><%= context[:method_full_name] %> :: BEGIN</div>
+          <div class="method-name"><%= context.full_name %> :: BEGIN</div>
           <div class="args">
-            <div class="method-args"><%= context[:args] %> </div>
+            <div class="method-args"><%= context.args %> </div>
             #block#
           </div>
         </div>
@@ -28,8 +26,8 @@ module Tracing
       # result = context[:result].inspect
       template = <<-EOF
         <div class="end">
-          <div class="method-name"><%= context[:method_full_name] %> :: END</div>
-          <div class="method-result"><%= context[:result] %></div>
+          <div class="method-name"><%= context.full_name %> :: END</div>
+          <div class="method-result"><%= context.result %></div>
         </div>
       </div>
     EOF

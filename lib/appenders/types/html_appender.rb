@@ -1,6 +1,6 @@
 module Tracing 
   class HtmlAppender < FileAppender   
-    attr_accessor :to_file, :html_output
+    attr_accessor :to_file, :html_output, :tracer
 
     def initialize(init_options = nil)
       @tracer = Tracing::HtmlTemplate.new      
@@ -73,6 +73,7 @@ module Tracing
         # insert into string
         html_output = txt[0..-html_end.length] + txt + html_end 
       end
+      txt
     end
 
     # silently ignore

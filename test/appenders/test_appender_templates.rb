@@ -25,7 +25,7 @@ class TestAppenderTemplates < Test::Unit::TestCase
   def test_appender_register_tracer
     # Trace configuration    
     
-    appender_1 = {:template => @xml_tracer}.appender
+    appender_1 = {:appender => :xml, :template => @xml_tracer}.appender
     puts "Appender 1: #{appender_1}"
     assert_equal Tracing::XmlAppender, appender_1.class, "Should create instance of XmlAppender"
 

@@ -10,7 +10,7 @@ module Tracing
     end
 
     def allow_action(msg, context)
-      puts "AMF"
+      # puts "AMF"
       obj = context[:args]
       if var_name.kind_of?(Symbol) || var_name.kind_of?(String)
         key = var_name.to_sym

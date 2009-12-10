@@ -1,39 +1,38 @@
-require "core_extensions"
-require "trace_calls"
-require "output_templates"
-require "sample_filters"
-require "rubygems"
-require "duration"
-require "test/unit"
+require "include"
+require 'appender_test_case'
  
 class TestStreamAppender < Test::Unit::TestCase
 
-  attr_reader :ah1, :filters
-
   def setup
-    @stream_app = {:tracer => :stream, :stream => :out}      
+    @appender = {:appender => :stream, :stream => :out}.appender      
+    @ctx = Context.ctx1
   end
         
   def test_filter
-    context = Testing.default_context
+    p @ctx
     
-    @ah1.allow_append("BEGIN #{name}", @context)
-
+    res = @ah1.allow_append("BEGIN #{name}", @ctx)    
     name = "my_other_method"
-    context.method_name = name
 
-    @ah1.allow_append("BEGIN #{name}", @context)        
+    @ctx[:method_name] = name
+    @ctx.context
+
+    res = @ah1.allow_append("BEGIN #{name}", @ctx)        
+    # puts res
     
-    context.result = "32"
+    @ctx[:result] = "32"
+    res = @ah1.allow_append("END #{name}", @ctx)    
 
-    @ah1.allow_append("END #{name}", @context)    
+    assert res, "Should work"
 
     name = "my_method"
-    context.method_name = name
-        
-    context.result = "27"
-
-    @ah1.allow_append("END #{name}", @context)    
+    @ctx[:method_name] = name
+    @ctx.context    
+    
+    @ctx[:result] = "27"
+    res = @ah1.allow_append("END #{name}", @ctx)    
+    
+    assert res, "Should work"
   end
   
   

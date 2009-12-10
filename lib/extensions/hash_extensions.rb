@@ -38,6 +38,23 @@ class Hash
     calculate_full_names  
   end
 
+  def full_name
+    context[:full_method_name]
+  end
+
+  def cls_name
+    context[:class_name]
+  end
+  
+  def args
+    context[:args].inspect if context[:args]      
+  end
+
+  def result
+    context[:result].inspect if context[:res]      
+  end
+
+
   def full_modules_name
     self[:modules].join("::") if self[:modules]
   end
@@ -89,13 +106,13 @@ class Hash
 
   def appenders        
     appender_list = self[:appenders]
-    return appender_list.appenders if appender_list
-    template = self.template
-    if template
-      puts template.inspect
-    else
-      puts "no template"
-    end
+    appender_list.appenders if appender_list
+    # template = self.template
+    # if template
+    #   puts template.inspect
+    # else
+    #   puts "no template"
+    # end
   end
 
   # Rework?
@@ -106,10 +123,10 @@ class Hash
 
   # return template
   def template     
-    puts "Template from : #{self.inspect}"
+    # puts "Template from : #{self.inspect}"
     template_key = self[:template] || self[:type]
     template_class = TemplateMappings.defaults[template_key]
-    puts template_class.inspect
+    # puts template_class.inspect
     template_class.new if template_class
   end
     

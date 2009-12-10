@@ -7,9 +7,9 @@ module Tracing
     end
 
     def allow_action(msg, context)
-      puts "ModuleF"
+      # puts "ModuleF"
       name = context[:full_modules_name]
-      puts "name: #{name}"
+      # puts "name: #{name}"
       name_allow_action(name)
     end
   end

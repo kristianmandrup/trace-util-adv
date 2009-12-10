@@ -2,10 +2,10 @@ module Tracing
   class XmlTemplate < BaseTemplate
     def before_template(context)
       template = <<-EOF
-    <method name="<%= context[:method_full_name] %>">
-      <modules><%= context[:full_module_name] %></modules>
-      <class><%= context[:class_name] %></class>
-      <args><%= context[:args].inspect if context[:args]%></args>
+    <method name="<%= context.full_name %>">
+      <modules><%= context.full_name %></modules>
+      <class><%= context.cls_name %></class>
+      <args><%= context.args %></args>
       #block#
     EOF
     end
@@ -17,8 +17,9 @@ module Tracing
     end
 
     def end_template(context) 
+      result = context[:result]
       template = <<-EOF
-      <result><%= context[:result] %></result>
+      <result><%= context.result %></result>
     </method>
     EOF
     end

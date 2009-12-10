@@ -24,8 +24,8 @@ class Symbol
   end
   
   def appenders
-    puts "Appenders from: #{self.inspect}"
-    puts "appender_class: #{self.appender_class.inspect}"
+    # puts "Appenders from: #{self.inspect}"
+    # puts "appender_class: #{self.appender_class.inspect}"
     self.appender_class.new nil
   end
   
